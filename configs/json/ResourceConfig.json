@@ -1,0 +1,47 @@
+[
+  {
+    "ID": "resource_food",
+    "名称Key": "resource.food.name",
+    "描述Key": "resource.food.desc",
+    "基础产出": "1",
+    "稀有度": "普通",
+    "资源类型": "食物",
+    "堆叠最大数量": 99
+  },
+  {
+    "ID": "resource_water",
+    "名称Key": "resource.water.name",
+    "描述Key": "resource.water.desc",
+    "基础产出": "1",
+    "稀有度": "普通",
+    "资源类型": "水",
+    "堆叠最大数量": 99
+  },
+  {
+    "ID": "resource_metal",
+    "名称Key": "resource.metal.name",
+    "描述Key": "resource.metal.desc",
+    "基础产出": "1",
+    "稀有度": "普通",
+    "资源类型": "材料",
+    "堆叠最大数量": 99
+  },
+  {
+    "ID": "resource_electronics",
+    "名称Key": "resource.electronics.name",
+    "描述Key": "resource.electronics.desc",
+    "基础产出": "1",
+    "稀有度": "稀有",
+    "资源类型": "材料",
+    "堆叠最大数量": 50
+  },
+  {
+    "ID": "resource_tech_point",
+    "名称Key": "resource.tech_point.name",
+    "描述Key": "resource.tech_point.desc",
+    "基础产出": "1",
+    "稀有度": "特殊",
+    "资源类型": "科技点",
+    "堆叠最大数量": 999
+  }
+]

@@ -1,0 +1,40 @@
+[
+  {
+    "ID": "item_medkit",
+    "名称Key": "item.medkit.name",
+    "描述Key": "item.medkit.desc",
+    "道具类型": "消耗品",
+    "使用效果类型": "恢复血量",
+    "使用效果数值": "3",
+    "堆叠最大数量": 10
+  },
+  {
+    "ID": "item_stamina_boost",
+    "名称Key": "item.stamina_boost.name",
+    "描述Key": "item.stamina_boost.desc",
+    "道具类型": "消耗品",
+    "使用效果类型": "恢复体力",
+    "使用效果数值": "20",
+    "堆叠最大数量": 10
+  },
+  {
+    "ID": "item_tech_unlocker",
+    "名称Key": "item.tech_unlocker.name",
+    "描述Key": "item.tech_unlocker.desc",
+    "道具类型": "专属道具",
+    "使用效果类型": "解锁科技",
+    "使用效果数值": "1",
+    "消耗条件": "科技ID",
+    "堆叠最大数量": 99
+  },
+  {
+    "ID": "item_talent_upgrade",
+    "名称Key": "item.talent_upgrade.name",
+    "描述Key": "item.talent_upgrade.desc",
+    "道具类型": "专属道具",
+    "使用效果类型": "升级天赋",
+    "使用效果数值": "1",
+    "消耗条件": "天赋ID",
+    "堆叠最大数量": 99
+  }
+]

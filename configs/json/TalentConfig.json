@@ -1,0 +1,107 @@
+[
+  {
+    "ID": "Talent_HardenedExplorer",
+    "名称Key": "talent.hardenedExplorer.name",
+    "描述Key": "talent.hardenedExplorer.desc",
+    "效果类型": "PermanentBuff",
+    "效果参数": "maxHpBonus=20",
+    "解锁条件类型": "ShelterLevelReached",
+    "解锁条件参数": "Level>=2",
+    "是否可叠加": true,
+    "最大叠加层数": 3
+  },
+  {
+    "ID": "Talent_IronWill",
+    "名称Key": "talent.ironWill.name",
+    "描述Key": "talent.ironWill.desc",
+    "效果类型": "PermanentBuff",
+    "效果参数": "maxStaminaBonus=2",
+    "解锁条件类型": "ShelterLevelReached",
+    "解锁条件参数": "Level>=2",
+    "是否可叠加": false
+  },
+  {
+    "ID": "Talent_FastLearner",
+    "名称Key": "talent.fastLearner.name",
+    "描述Key": "talent.fastLearner.desc",
+    "效果类型": "ExploreBuff",
+    "效果参数": "expRate=0.2",
+    "解锁条件类型": "TechReached",
+    "解锁条件参数": "TechId=tech_brain_training",
+    "是否可叠加": true,
+    "最大叠加层数": 3
+  },
+  {
+    "ID": "Talent_ScavengerMaster",
+    "名称Key": "talent.scavengerMaster.name",
+    "描述Key": "talent.scavengerMaster.desc",
+    "效果类型": "ExploreBuff",
+    "效果参数": "extraGarbageCount=1",
+    "解锁条件类型": "StoryFlag",
+    "解锁条件参数": "Flag=FinishedFirstExpedition",
+    "是否可叠加": true,
+    "最大叠加层数": 2
+  },
+  {
+    "ID": "Talent_MonsterHunter",
+    "名称Key": "talent.monsterHunter.name",
+    "描述Key": "talent.monsterHunter.desc",
+    "效果类型": "BattleBuff",
+    "效果参数": "monsterDamageRate=0.15",
+    "解锁条件类型": "StoryFlag",
+    "解锁条件参数": "Flag=KilledBoss_01",
+    "是否可叠加": false
+  },
+  {
+    "ID": "Talent_TeamLeader",
+    "名称Key": "talent.teamLeader.name",
+    "描述Key": "talent.teamLeader.desc",
+    "效果类型": "ExploreBuff",
+    "效果参数": "maxTeamSizeBonus=1",
+    "解锁条件类型": "ShelterLevelReached",
+    "解锁条件参数": "Level>=3",
+    "是否可叠加": false
+  },
+  {
+    "ID": "Talent_TechGuru",
+    "名称Key": "talent.techGuru.name",
+    "描述Key": "talent.techGuru.desc",
+    "效果类型": "PermanentBuff",
+    "效果参数": "extraTechPointRate=0.2",
+    "解锁条件类型": "TechReached",
+    "解锁条件参数": "Branch=Int;Level>=2",
+    "是否可叠加": false
+  },
+  {
+    "ID": "Talent_SafeRetreat",
+    "名称Key": "talent.safeRetreat.name",
+    "描述Key": "talent.safeRetreat.desc",
+    "效果类型": "ExploreBuff",
+    "效果参数": "avoidEventChance=0.3",
+    "解锁条件类型": "ShelterLevelReached",
+    "解锁条件参数": "Level>=2",
+    "是否可叠加": false
+  },
+  {
+    "ID": "Talent_LuckyFinder",
+    "名称Key": "talent.luckyFinder.name",
+    "描述Key": "talent.luckyFinder.desc",
+    "效果类型": "ExtraDrop",
+    "效果参数": "rareDropRate=0.1",
+    "解锁条件类型": "StoryFlag",
+    "解锁条件参数": "Flag=FindRareGarbage",
+    "是否可叠加": true,
+    "最大叠加层数": 5
+  },
+  {
+    "ID": "Talent_ShieldSpecialist",
+    "名称Key": "talent.shieldSpecialist.name",
+    "描述Key": "talent.shieldSpecialist.desc",
+    "效果类型": "BattleBuff",
+    "效果参数": "shieldRateBonus=0.1",
+    "解锁条件类型": "TechReached",
+    "解锁条件参数": "TechId=tech_shield",
+    "是否可叠加": true,
+    "最大叠加层数": 3
+  }
+]

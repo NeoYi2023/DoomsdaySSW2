@@ -1,0 +1,290 @@
+{
+  "exploration_point_1": {
+    "zh-CN": "雅克酒店",
+    "en-US": "Jacques Hotel"
+  },
+  "exploration_point_2": {
+    "zh-CN": "林道公寓",
+    "en-US": "Lindao Apartments"
+  },
+  "exploration_point_3": {
+    "zh-CN": "独角兽商城",
+    "en-US": "Unicorn Mall"
+  },
+  "exploration_point_4": {
+    "zh-CN": "阳光图书馆",
+    "en-US": "Sunshine Library"
+  },
+  "exploration_point_5": {
+    "zh-CN": "政府大楼",
+    "en-US": "Government Building"
+  },
+  "exploration_point_6": {
+    "zh-CN": "警察局",
+    "en-US": "Police Station"
+  },
+  "exploration_point_7": {
+    "zh-CN": "私营监狱",
+    "en-US": "Private Prison"
+  },
+  "exploration_point_8": {
+    "zh-CN": "鞋帽工厂",
+    "en-US": "Shoe and Hat Factory"
+  },
+  "exploration_point_1_desc": {
+    "zh-CN": "雅克酒店",
+    "en-US": "Jacques Hotel"
+  },
+  "exploration_point_2_desc": {
+    "zh-CN": "林道公寓",
+    "en-US": "Lindao Apartments"
+  },
+  "exploration_point_3_desc": {
+    "zh-CN": "独角兽商城",
+    "en-US": "Unicorn Mall"
+  },
+  "exploration_point_4_desc": {
+    "zh-CN": "阳光图书馆",
+    "en-US": "Sunshine Library"
+  },
+  "exploration_point_5_desc": {
+    "zh-CN": "政府大楼",
+    "en-US": "Government Building"
+  },
+  "exploration_point_6_desc": {
+    "zh-CN": "警察局",
+    "en-US": "Police Station"
+  },
+  "exploration_point_7_desc": {
+    "zh-CN": "私营监狱",
+    "en-US": "Private Prison"
+  },
+  "exploration_point_8_desc": {
+    "zh-CN": "鞋帽工厂",
+    "en-US": "Shoe and Hat Factory"
+  },
+  "hero_0001": {
+    "zh-CN": "艾丽丝",
+    "en-US": "Alice"
+  },
+  "hero_0002": {
+    "zh-CN": "鲍勃",
+    "en-US": "Bob"
+  },
+  "hero_0003": {
+    "zh-CN": "查理",
+    "en-US": "Charlie"
+  },
+  "hero_0001_desc": {
+    "zh-CN": "前医护人员，擅长急救和医疗。",
+    "en-US": "Former medical staff"
+  },
+  "hero_0002_desc": {
+    "zh-CN": "前建筑工人，体力充沛。",
+    "en-US": "Former construction worker with high stamina."
+  },
+  "hero_0003_desc": {
+    "zh-CN": "前工程师，擅长修理和制造。",
+    "en-US": "Former engineer"
+  },
+  "garbage_10001": {
+    "zh-CN": "牡蛎",
+    "en-US": "Oysters"
+  },
+  "garbage_10002": {
+    "zh-CN": "螃蟹",
+    "en-US": "crabs"
+  },
+  "garbage_10003": {
+    "zh-CN": "猫头鹰",
+    "en-US": "owls"
+  },
+  "garbage_10004": {
+    "zh-CN": "猴子",
+    "en-US": "monkeys"
+  },
+  "garbage_10005": {
+    "zh-CN": "蜜蜂",
+    "en-US": "bees"
+  },
+  "garbage_10006": {
+    "zh-CN": "老鼠",
+    "en-US": "mice"
+  },
+  "garbage_10007": {
+    "zh-CN": "鹅",
+    "en-US": "geese"
+  },
+  "garbage_10008": {
+    "zh-CN": "喜鹊",
+    "en-US": "magpies"
+  },
+  "garbage_10009": {
+    "zh-CN": "乌鸦",
+    "en-US": "crows"
+  },
+  "garbage_10010": {
+    "zh-CN": "蜗牛",
+    "en-US": "snails"
+  },
+  "garbage_10011": {
+    "zh-CN": "金鱼",
+    "en-US": "goldfish"
+  },
+  "garbage_10012": {
+    "zh-CN": "蛋",
+    "en-US": "eggs"
+  },
+  "garbage_10013": {
+    "zh-CN": "牛奶",
+    "en-US": "milk"
+  },
+  "garbage_10014": {
+    "zh-CN": "樱桃",
+    "en-US": "cherries"
+  },
+  "garbage_10015": {
+    "zh-CN": "奶酪",
+    "en-US": "cheese"
+  },
+  "garbage_10016": {
+    "zh-CN": "香蕉",
+    "en-US": "bananas"
+  },
+  "garbage_20001": {
+    "zh-CN": "木家具",
+    "en-US": "wooden furniture"
+  },
+  "garbage_20002": {
+    "zh-CN": "木门",
+    "en-US": "wooden doors"
+  },
+  "garbage_20003": {
+    "zh-CN": "货架",
+    "en-US": "shelves"
+  },
+  "garbage_20004": {
+    "zh-CN": "自行车",
+    "en-US": "bicycles"
+  },
+  "garbage_20005": {
+    "zh-CN": "铁管",
+    "en-US": "iron pipes"
+  },
+  "garbage_10001_desc": {
+    "zh-CN": "牡蛎",
+    "en-US": "Oysters"
+  },
+  "garbage_10002_desc": {
+    "zh-CN": "螃蟹",
+    "en-US": "crabs"
+  },
+  "garbage_10003_desc": {
+    "zh-CN": "猫头鹰",
+    "en-US": "owls"
+  },
+  "garbage_10004_desc": {
+    "zh-CN": "猴子",
+    "en-US": "monkeys"
+  },
+  "garbage_10005_desc": {
+    "zh-CN": "蜜蜂",
+    "en-US": "bees"
+  },
+  "garbage_10006_desc": {
+    "zh-CN": "老鼠",
+    "en-US": "mice"
+  },
+  "garbage_10007_desc": {
+    "zh-CN": "鹅",
+    "en-US": "geese"
+  },
+  "garbage_10008_desc": {
+    "zh-CN": "喜鹊",
+    "en-US": "magpies"
+  },
+  "garbage_10009_desc": {
+    "zh-CN": "乌鸦",
+    "en-US": "crows"
+  },
+  "garbage_10010_desc": {
+    "zh-CN": "蜗牛",
+    "en-US": "snails"
+  },
+  "garbage_10011_desc": {
+    "zh-CN": "金鱼",
+    "en-US": "goldfish"
+  },
+  "garbage_10012_desc": {
+    "zh-CN": "蛋",
+    "en-US": "eggs"
+  },
+  "garbage_10013_desc": {
+    "zh-CN": "牛奶",
+    "en-US": "milk"
+  },
+  "garbage_10014_desc": {
+    "zh-CN": "樱桃",
+    "en-US": "cherries"
+  },
+  "garbage_10015_desc": {
+    "zh-CN": "奶酪",
+    "en-US": "cheese"
+  },
+  "garbage_10016_desc": {
+    "zh-CN": "香蕉",
+    "en-US": "bananas"
+  },
+  "garbage_20001_desc": {
+    "zh-CN": "木家具",
+    "en-US": "wooden furniture"
+  },
+  "garbage_20002_desc": {
+    "zh-CN": "木门",
+    "en-US": "wooden doors"
+  },
+  "garbage_20003_desc": {
+    "zh-CN": "货架",
+    "en-US": "shelves"
+  },
+  "garbage_20004_desc": {
+    "zh-CN": "自行车",
+    "en-US": "bicycles"
+  },
+  "garbage_20005_desc": {
+    "zh-CN": "铁管",
+    "en-US": "iron pipes"
+  },
+  "monster_zombie_3": {
+    "zh-CN": "巨型僵尸",
+    "en-US": "Giant Zombie"
+  },
+  "monster_zombie_2": {
+    "zh-CN": "中型僵尸",
+    "en-US": "Medium Zombie"
+  },
+  "monster_zombie_1": {
+    "zh-CN": "小型僵尸",
+    "en-US": "Small Zombie"
+  },
+  "monster_zombie_3_desc": {
+    "zh-CN": "巨型僵尸",
+    "en-US": "Giant Zombie"
+  },
+  "monster_zombie_2_desc": {
+    "zh-CN": "中型僵尸",
+    "en-US": "Medium Zombie"
+  },
+  "monster_zombie_1_desc": {
+    "zh-CN": "小型僵尸",
+    "en-US": "Small Zombie"
+  },
+  "Advanced_10002": {
+    "zh-CN": "螃蟹开会",
+    "en-US": "CrabMeeting"
+  },
+  "Advanced_10002_desc": {
+    "zh-CN": "螃蟹开会",
+    "en-US": "CrabMeeting"
+  }
+}

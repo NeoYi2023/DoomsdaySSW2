@@ -1,0 +1,3 @@
+﻿ID,名称Key,描述Key,适用垃圾类型列表,触发条件类型,触发条件参数
+condition_example_engineer,advCond.example.engineer.name,advCond.example.engineer.desc,废金属,ExplorerTagCount,ExplorerTag=Engineer;MinCount=2
+Advanced_10002,Advanced_10002,Advanced_10002_desc,螃蟹,Advanced_10002,MinCount=2

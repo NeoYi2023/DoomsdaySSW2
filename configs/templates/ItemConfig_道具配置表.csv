@@ -1,0 +1,5 @@
+ID,名称Key,描述Key,道具类型,使用效果类型,使用效果数值,消耗条件,堆叠最大数量
+item_medkit,item.medkit.name,item.medkit.desc,消耗品,恢复血量,3,,10
+item_stamina_boost,item.stamina_boost.name,item.stamina_boost.desc,消耗品,恢复体力,20,,10
+item_tech_unlocker,item.tech_unlocker.name,item.tech_unlocker.desc,专属道具,解锁科技,1,科技ID,99
+item_talent_upgrade,item.talent_upgrade.name,item.talent_upgrade.desc,专属道具,升级天赋,1,天赋ID,99

@@ -1,0 +1,6 @@
+ID,名称Key,描述Key,基础产出,稀有度,资源类型,堆叠最大数量
+resource_food,resource.food.name,resource.food.desc,1,普通,食物,99
+resource_water,resource.water.name,resource.water.desc,1,普通,水,99
+resource_metal,resource.metal.name,resource.metal.desc,1,普通,材料,99
+resource_electronics,resource.electronics.name,resource.electronics.desc,1,稀有,材料,50
+resource_tech_point,resource.tech_point.name,resource.tech_point.desc,1,特殊,科技点,999

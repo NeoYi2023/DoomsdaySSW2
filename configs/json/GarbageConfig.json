@@ -1,0 +1,218 @@
+[
+  {
+    "ID": "garbage_10001",
+    "名称Key": "garbage_10001",
+    "描述Key": "garbage_10001_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "水产"
+    ]
+  },
+  {
+    "ID": "garbage_10002",
+    "名称Key": "garbage_10002",
+    "描述Key": "garbage_10002_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "水产",
+      "螃蟹"
+    ],
+    "进阶产出机制ID列表": [
+      "Advanced_10002"
+    ],
+    "进阶产出": "resource_food_3"
+  },
+  {
+    "ID": "garbage_10003",
+    "名称Key": "garbage_10003",
+    "描述Key": "garbage_10003_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "野兽"
+    ]
+  },
+  {
+    "ID": "garbage_10004",
+    "名称Key": "garbage_10004",
+    "描述Key": "garbage_10004_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "野兽"
+    ]
+  },
+  {
+    "ID": "garbage_10005",
+    "名称Key": "garbage_10005",
+    "描述Key": "garbage_10005_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "昆虫"
+    ]
+  },
+  {
+    "ID": "garbage_10006",
+    "名称Key": "garbage_10006",
+    "描述Key": "garbage_10006_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "野兽"
+    ]
+  },
+  {
+    "ID": "garbage_10007",
+    "名称Key": "garbage_10007",
+    "描述Key": "garbage_10007_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "家禽"
+    ]
+  },
+  {
+    "ID": "garbage_10008",
+    "名称Key": "garbage_10008",
+    "描述Key": "garbage_10008_desc",
+    "默认搜索产出": "resource_food_-1",
+    "垃圾类型列表": [
+      "食物",
+      "家禽"
+    ]
+  },
+  {
+    "ID": "garbage_10009",
+    "名称Key": "garbage_10009",
+    "描述Key": "garbage_10009_desc",
+    "默认搜索产出": "resource_food_2",
+    "垃圾类型列表": [
+      "食物",
+      "野兽"
+    ]
+  },
+  {
+    "ID": "garbage_10010",
+    "名称Key": "garbage_10010",
+    "描述Key": "garbage_10010_desc",
+    "默认搜索产出": "resource_food_0",
+    "垃圾类型列表": [
+      "食物",
+      "野兽"
+    ]
+  },
+  {
+    "ID": "garbage_10011",
+    "名称Key": "garbage_10011",
+    "描述Key": "garbage_10011_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "家禽"
+    ]
+  },
+  {
+    "ID": "garbage_10012",
+    "名称Key": "garbage_10012",
+    "描述Key": "garbage_10012_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "家禽"
+    ]
+  },
+  {
+    "ID": "garbage_10013",
+    "名称Key": "garbage_10013",
+    "描述Key": "garbage_10013_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "食材"
+    ]
+  },
+  {
+    "ID": "garbage_10014",
+    "名称Key": "garbage_10014",
+    "描述Key": "garbage_10014_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "水果"
+    ]
+  },
+  {
+    "ID": "garbage_10015",
+    "名称Key": "garbage_10015",
+    "描述Key": "garbage_10015_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "食材"
+    ]
+  },
+  {
+    "ID": "garbage_10016",
+    "名称Key": "garbage_10016",
+    "描述Key": "garbage_10016_desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "食材"
+    ]
+  },
+  {
+    "ID": "garbage_20001",
+    "名称Key": "garbage_20001",
+    "描述Key": "garbage_20001_desc",
+    "默认搜索产出": "resource_material_1",
+    "垃圾类型列表": [
+      "建材",
+      "木材"
+    ],
+    "": "80"
+  },
+  {
+    "ID": "garbage_20002",
+    "名称Key": "garbage_20002",
+    "描述Key": "garbage_20002_desc",
+    "默认搜索产出": "resource_material_1",
+    "垃圾类型列表": [
+      "建材",
+      "木材"
+    ]
+  },
+  {
+    "ID": "garbage_20003",
+    "名称Key": "garbage_20003",
+    "描述Key": "garbage_20003_desc",
+    "默认搜索产出": "resource_material_1",
+    "垃圾类型列表": [
+      "建材",
+      "金属"
+    ]
+  },
+  {
+    "ID": "garbage_20004",
+    "名称Key": "garbage_20004",
+    "描述Key": "garbage_20004_desc",
+    "默认搜索产出": "resource_material_1",
+    "垃圾类型列表": [
+      "建材",
+      "金属"
+    ]
+  },
+  {
+    "ID": "garbage_20005",
+    "名称Key": "garbage_20005",
+    "描述Key": "garbage_20005_desc",
+    "默认搜索产出": "resource_material_1",
+    "垃圾类型列表": [
+      "建材",
+      "金属"
+    ]
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "ID": "Skill_EnergyShield",
+    "名称Key": "skill.energyShield.name",
+    "描述Key": "skill.energyShield.desc",
+    "效果类型": "BattleBuff",
+    "效果参数": "shieldRate=0.2;durationRounds=3",
+    "触发时机": "OnBattleStart",
+    "作用目标": "Self"
+  },
+  {
+    "ID": "Skill_FirstStrike",
+    "名称Key": "skill.firstStrike.name",
+    "描述Key": "skill.firstStrike.desc",
+    "效果类型": "BattleBuff",
+    "效果参数": "damageRate=0.3",
+    "触发时机": "OnFirstAttack",
+    "作用目标": "Self"
+  },
+  {
+    "ID": "Skill_BloodFrenzy",
+    "名称Key": "skill.bloodFrenzy.name",
+    "描述Key": "skill.bloodFrenzy.desc",
+    "效果类型": "BattleBuff",
+    "效果参数": "hpThreshold=0.3;attackRate=0.2",
+    "触发时机": "OnAttack",
+    "作用目标": "Self"
+  },
+  {
+    "ID": "Skill_TeamInspire",
+    "名称Key": "skill.teamInspire.name",
+    "描述Key": "skill.teamInspire.desc",
+    "效果类型": "BattleBuff",
+    "效果参数": "attackRate=0.1;durationRounds=2",
+    "触发时机": "OnBattleStart",
+    "作用目标": "Team"
+  },
+  {
+    "ID": "Skill_ScavengerSense",
+    "名称Key": "skill.scavengerSense.name",
+    "描述Key": "skill.scavengerSense.desc",
+    "效果类型": "ExploreBuff",
+    "效果参数": "extraGarbageCount=1",
+    "触发时机": "OnGarbageSearched",
+    "作用目标": "CurrentExplorer"
+  },
+  {
+    "ID": "Skill_Pathfinder",
+    "名称Key": "skill.pathfinder.name",
+    "描述Key": "skill.pathfinder.desc",
+    "效果类型": "ExploreBuff",
+    "效果参数": "staminaCostDelta=-1",
+    "触发时机": "OnWorldMove",
+    "作用目标": "Team"
+  },
+  {
+    "ID": "Skill_GuardianAura",
+    "名称Key": "skill.guardianAura.name",
+    "描述Key": "skill.guardianAura.desc",
+    "效果类型": "BattleBuff",
+    "效果参数": "damageReduceRate=0.15",
+    "触发时机": "OnAllyDamaged",
+    "作用目标": "Team"
+  },
+  {
+    "ID": "Skill_LastStand",
+    "名称Key": "skill.lastStand.name",
+    "描述Key": "skill.lastStand.desc",
+    "效果类型": "BattleBuff",
+    "效果参数": "hpThreshold=0.2;damageReduceRate=0.3",
+    "触发时机": "OnDamageTaken",
+    "作用目标": "Self"
+  },
+  {
+    "ID": "Skill_FieldRepair",
+    "名称Key": "skill.fieldRepair.name",
+    "描述Key": "skill.fieldRepair.desc",
+    "效果类型": "ExploreBuff",
+    "效果参数": "durabilityRestore=10",
+    "触发时机": "OnReturnToShelter",
+    "作用目标": "Team"
+  },
+  {
+    "ID": "Skill_GarbageAlchemist",
+    "名称Key": "skill.garbageAlchemist.name",
+    "描述Key": "skill.garbageAlchemist.desc",
+    "效果类型": "ExtraDrop",
+    "效果参数": "extraChipChance=0.2",
+    "触发时机": "OnGarbageSearched",
+    "作用目标": "CurrentExplorer"
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "等级": 1,
+    "默认解锁设施ID列表": [
+      "workshop_basic"
+    ],
+    "可建造设施ID列表": [
+      "workshop_basic"
+    ],
+    "最大设施数量": 5
+  },
+  {
+    "等级": 2,
+    "默认解锁设施ID列表": [
+      "storage_basic"
+    ],
+    "可建造设施ID列表": [
+      "storage_basic"
+    ],
+    "最大设施数量": "workshop_advanced",
+    "升级前置条件资源ID": "8",
+    "升级前置条件资源数量": "resource_metal"
+  },
+  {
+    "等级": 3,
+    "默认解锁设施ID列表": [
+      "defense_basic"
+    ],
+    "可建造设施ID列表": [
+      "defense_basic"
+    ],
+    "最大设施数量": "workshop_advanced",
+    "升级前置条件资源ID": "12",
+    "升级前置条件资源数量": "resource_metal"
+  }
+]

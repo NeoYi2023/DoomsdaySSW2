@@ -1,0 +1,5 @@
+ID,名称Key,描述Key,所属分支,解锁条件类型,解锁条件值,效果类型,效果数值,前置科技ID
+tech_physique_1,tech.physique.1.name,tech.physique.1.desc,体魄,科技点,10,血量上限,1,
+tech_physique_2,tech.physique.2.name,tech.physique.2.desc,体魄,科技点,20,血量上限,2,tech_physique_1
+tech_intelligence_1,tech.intelligence.1.name,tech.intelligence.1.desc,智力,科技点,10,资源收集种类,1,
+tech_strategy_1,tech.strategy.1.name,tech.strategy.1.desc,谋略,科技点,10,探索效率,0.1,

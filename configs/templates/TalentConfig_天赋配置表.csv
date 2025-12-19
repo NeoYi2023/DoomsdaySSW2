@@ -1,0 +1,11 @@
+ID,名称Key,描述Key,效果类型,效果参数,解锁条件类型,解锁条件参数,是否可叠加,最大叠加层数
+Talent_HardenedExplorer,talent.hardenedExplorer.name,talent.hardenedExplorer.desc,PermanentBuff,"maxHpBonus=20",ShelterLevelReached,"Level>=2",true,3
+Talent_IronWill,talent.ironWill.name,talent.ironWill.desc,PermanentBuff,"maxStaminaBonus=2",ShelterLevelReached,"Level>=2",false,
+Talent_FastLearner,talent.fastLearner.name,talent.fastLearner.desc,ExploreBuff,"expRate=0.2",TechReached,"TechId=tech_brain_training",true,3
+Talent_ScavengerMaster,talent.scavengerMaster.name,talent.scavengerMaster.desc,ExploreBuff,"extraGarbageCount=1",StoryFlag,"Flag=FinishedFirstExpedition",true,2
+Talent_MonsterHunter,talent.monsterHunter.name,talent.monsterHunter.desc,BattleBuff,"monsterDamageRate=0.15",StoryFlag,"Flag=KilledBoss_01",false,
+Talent_TeamLeader,talent.teamLeader.name,talent.teamLeader.desc,ExploreBuff,"maxTeamSizeBonus=1",ShelterLevelReached,"Level>=3",false,
+Talent_TechGuru,talent.techGuru.name,talent.techGuru.desc,PermanentBuff,"extraTechPointRate=0.2",TechReached,"Branch=Int;Level>=2",false,
+Talent_SafeRetreat,talent.safeRetreat.name,talent.safeRetreat.desc,ExploreBuff,"avoidEventChance=0.3",ShelterLevelReached,"Level>=2",false,
+Talent_LuckyFinder,talent.luckyFinder.name,talent.luckyFinder.desc,ExtraDrop,"rareDropRate=0.1",StoryFlag,"Flag=FindRareGarbage",true,5
+Talent_ShieldSpecialist,talent.shieldSpecialist.name,talent.shieldSpecialist.desc,BattleBuff,"shieldRateBonus=0.1",TechReached,"TechId=tech_shield",true,3

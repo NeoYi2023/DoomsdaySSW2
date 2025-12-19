@@ -1,0 +1,22 @@
+[
+  {
+    "ID": "condition_example_engineer",
+    "名称Key": "advCond.example.engineer.name",
+    "描述Key": "advCond.example.engineer.desc",
+    "适用垃圾类型列表": [
+      "废金属"
+    ],
+    "触发条件类型": "ExplorerTagCount",
+    "触发条件参数": "ExplorerTag=Engineer;MinCount=2"
+  },
+  {
+    "ID": "Advanced_10002",
+    "名称Key": "Advanced_10002",
+    "描述Key": "Advanced_10002_desc",
+    "适用垃圾类型列表": [
+      "螃蟹"
+    ],
+    "触发条件类型": "Advanced_10002",
+    "触发条件参数": "MinCount=2"
+  }
+]

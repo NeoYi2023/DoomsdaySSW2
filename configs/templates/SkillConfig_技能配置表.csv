@@ -1,0 +1,11 @@
+ID,名称Key,描述Key,效果类型,效果参数,触发时机,作用目标,消耗道具ID
+Skill_EnergyShield,skill.energyShield.name,skill.energyShield.desc,BattleBuff,"shieldRate=0.2;durationRounds=3",OnBattleStart,Self,
+Skill_FirstStrike,skill.firstStrike.name,skill.firstStrike.desc,BattleBuff,"damageRate=0.3",OnFirstAttack,Self,
+Skill_BloodFrenzy,skill.bloodFrenzy.name,skill.bloodFrenzy.desc,BattleBuff,"hpThreshold=0.3;attackRate=0.2",OnAttack,Self,
+Skill_TeamInspire,skill.teamInspire.name,skill.teamInspire.desc,BattleBuff,"attackRate=0.1;durationRounds=2",OnBattleStart,Team,
+Skill_ScavengerSense,skill.scavengerSense.name,skill.scavengerSense.desc,ExploreBuff,"extraGarbageCount=1",OnGarbageSearched,CurrentExplorer,
+Skill_Pathfinder,skill.pathfinder.name,skill.pathfinder.desc,ExploreBuff,"staminaCostDelta=-1",OnWorldMove,Team,
+Skill_GuardianAura,skill.guardianAura.name,skill.guardianAura.desc,BattleBuff,"damageReduceRate=0.15",OnAllyDamaged,Team,
+Skill_LastStand,skill.lastStand.name,skill.lastStand.desc,BattleBuff,"hpThreshold=0.2;damageReduceRate=0.3",OnDamageTaken,Self,
+Skill_FieldRepair,skill.fieldRepair.name,skill.fieldRepair.desc,ExploreBuff,"durabilityRestore=10",OnReturnToShelter,Team,
+Skill_GarbageAlchemist,skill.garbageAlchemist.name,skill.garbageAlchemist.desc,ExtraDrop,"extraChipChance=0.2",OnGarbageSearched,CurrentExplorer,

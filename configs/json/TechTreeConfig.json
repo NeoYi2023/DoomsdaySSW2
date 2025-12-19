@@ -1,0 +1,43 @@
+[
+  {
+    "ID": "tech_physique_1",
+    "名称Key": "tech.physique.1.name",
+    "描述Key": "tech.physique.1.desc",
+    "所属分支": "体魄",
+    "解锁条件类型": "科技点",
+    "解锁条件值": "10",
+    "效果类型": "血量上限",
+    "效果数值": "1"
+  },
+  {
+    "ID": "tech_physique_2",
+    "名称Key": "tech.physique.2.name",
+    "描述Key": "tech.physique.2.desc",
+    "所属分支": "体魄",
+    "解锁条件类型": "科技点",
+    "解锁条件值": "20",
+    "效果类型": "血量上限",
+    "效果数值": "2",
+    "前置科技ID": "tech_physique_1"
+  },
+  {
+    "ID": "tech_intelligence_1",
+    "名称Key": "tech.intelligence.1.name",
+    "描述Key": "tech.intelligence.1.desc",
+    "所属分支": "智力",
+    "解锁条件类型": "科技点",
+    "解锁条件值": "10",
+    "效果类型": "资源收集种类",
+    "效果数值": "1"
+  },
+  {
+    "ID": "tech_strategy_1",
+    "名称Key": "tech.strategy.1.name",
+    "描述Key": "tech.strategy.1.desc",
+    "所属分支": "谋略",
+    "解锁条件类型": "科技点",
+    "解锁条件值": "10",
+    "效果类型": "探索效率",
+    "效果数值": "0.1"
+  }
+]
