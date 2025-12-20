@@ -9,6 +9,7 @@ export interface ExplorerConfigEntry {
   攻击力?: number;
   背包格子数量?: number; // inventoryCapacity
   初始天赋ID列表?: string; // Talent IDs joined by |
+  装备槽位数量?: number; // equipmentSlots
 }
 
 export interface MonsterConfigEntry {
@@ -111,6 +112,43 @@ export interface TalentConfigEntry {
   最大叠加层数?: number | string;
 }
 
+export interface QuestConfigEntry {
+  ID: string; // questId
+  名称Key: string;
+  描述Key?: string;
+  触发条件类型: string; // RoundReached, QuestCompleted, ResourceOwned, ExplorationCompleted, MonsterDefeated, ShelterLevelReached
+  触发条件参数?: string; // JSON字符串或键值对格式
+  完成条件类型: string; // CollectResource, DefeatMonster, CompleteExploration, BuildFacility, ReachRound
+  完成条件目标ID: string; // 资源ID、怪物ID、探索点ID等
+  完成条件目标值: number; // 目标值
+  奖励资源列表?: string; // 资源ID_数量|资源ID_数量
+  奖励道具列表?: string; // 道具ID_数量|道具ID_数量
+  下一个任务ID?: string; // 任务链中的下一个任务ID
+  优先级?: number; // 优先级（数字越小优先级越高）
+  是否章节结束任务?: boolean | string; // 是否为章节结束任务
+}
+
+export interface ChapterConfigEntry {
+  ID: string; // chapterId
+  名称Key: string;
+  剧情Key: string; // 剧情文本的多语言Key
+  章节编号: number; // 章节编号（1, 2, 3...）
+  地图ID列表: string; // 该章节包含的地图ID列表（以|分隔）
+  解锁任务ID?: string; // 解锁该章节所需的任务ID（上一章节的结束任务）
+  优先级?: number; // 优先级（用于排序）
+}
+
+export interface EquipmentConfigEntry {
+  ID: string; // equipmentId
+  名称Key: string;
+  描述Key?: string;
+  装备标签列表?: string; // 装备标签列表（以|分隔）
+  匹配垃圾类型列表?: string; // 匹配的垃圾类型列表（以|分隔）
+  效果类型?: string; // 效果类型（ProvideTag, MatchGarbageType, BoostAdvancedOutput）
+  效果参数?: string; // 效果参数（JSON字符串或键值对）
+  堆叠最大数量?: number; // 堆叠最大数量（如果装备可以作为道具）
+}
+
 export interface ConfigBundle {
   explorers: ExplorerConfigEntry[];
   monsters: MonsterConfigEntry[];
@@ -123,4 +161,7 @@ export interface ConfigBundle {
   advancedOutputConditions: AdvancedOutputConditionConfigEntry[];
   skills: SkillConfigEntry[];
   talents: TalentConfigEntry[];
+  quests: QuestConfigEntry[];
+  chapters: ChapterConfigEntry[];
+  equipments: EquipmentConfigEntry[];
 }

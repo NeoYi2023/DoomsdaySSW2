@@ -1,0 +1,10 @@
+[
+  {
+    "ID": "chapter_001",
+    "名称Key": "chapter_001_name",
+    "剧情Key": "chapter_001_story",
+    "章节编号": 1,
+    "地图ID列表": "map_001",
+    "优先级": 1
+  }
+]

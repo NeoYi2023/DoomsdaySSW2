@@ -4,6 +4,7 @@ import type {
   ResourceStack,
   GarbageConfigEntry,
   AdvancedOutputConditionConfigEntry,
+  EquipmentConfigEntry,
 } from '../types/gameTypes';
 
 /** 通用参数解析："key=value;key2=3" -> { key: 'value', key2: 3 } */
@@ -116,6 +117,7 @@ export interface AdvancedOutputEvaluationContext {
   garbageConfig: GarbageConfigEntry;
   board: ExplorationBoardLayer; // 当前探索棋盘数据（包含所有格子的位置和垃圾ID）
   allGarbageConfigs: GarbageConfigEntry[]; // 所有垃圾配置（用于根据垃圾ID查找配置）
+  allEquipmentConfigs?: EquipmentConfigEntry[]; // 所有装备配置（用于根据装备ID查找配置）
 }
 
 export type AdvancedOutputConditionHandler = (
@@ -140,6 +142,80 @@ const advancedOutputConditionHandlers: Record<string, AdvancedOutputConditionHan
       if (!tagsRaw) return false;
       const tags = tagsRaw.split('|').map((t) => t.trim()).filter(Boolean);
       return tags.includes(tag);
+    }).length;
+
+    return count >= minCount;
+  },
+  /**
+   * EquipmentCount:
+   * - 参数示例："EquipmentTag=工具;MinCount=2";
+   * - 逻辑：统计 explorers 中装备了指定标签装备的角色数量，数量 >= MinCount 则返回 true。
+   */
+  EquipmentCount: (condition, ctx) => {
+    const params = parseParams(condition.触发条件参数);
+    const equipmentTag = String(params.EquipmentTag ?? '');
+    const minCount = Number(params.MinCount ?? 1) || 1;
+    if (!equipmentTag || !ctx.allEquipmentConfigs) return false;
+
+    // 创建装备ID到配置的映射
+    const equipmentConfigMap = new Map<string, EquipmentConfigEntry>();
+    for (const eq of ctx.allEquipmentConfigs) {
+      equipmentConfigMap.set(eq.ID, eq);
+    }
+
+    const count = ctx.explorers.filter((ex) => {
+      // 检查角色是否装备了指定标签的装备
+      for (const equipmentId of ex.equipment) {
+        const equipmentConfig = equipmentConfigMap.get(equipmentId);
+        if (!equipmentConfig) continue;
+
+        const tagsRaw = equipmentConfig.装备标签列表 ?? '';
+        const tags = tagsRaw
+          .split('|')
+          .map((t) => t.trim())
+          .filter(Boolean);
+        if (tags.includes(equipmentTag)) {
+          return true;
+        }
+      }
+      return false;
+    }).length;
+
+    return count >= minCount;
+  },
+  /**
+   * EquipmentMatchGarbageType:
+   * - 参数示例："GarbageType=废金属;MinCount=1";
+   * - 逻辑：统计 explorers 中装备了匹配指定垃圾类型装备的角色数量，数量 >= MinCount 则返回 true。
+   */
+  EquipmentMatchGarbageType: (condition, ctx) => {
+    const params = parseParams(condition.触发条件参数);
+    const garbageType = String(params.GarbageType ?? '');
+    const minCount = Number(params.MinCount ?? 1) || 1;
+    if (!garbageType || !ctx.allEquipmentConfigs) return false;
+
+    // 创建装备ID到配置的映射
+    const equipmentConfigMap = new Map<string, EquipmentConfigEntry>();
+    for (const eq of ctx.allEquipmentConfigs) {
+      equipmentConfigMap.set(eq.ID, eq);
+    }
+
+    const count = ctx.explorers.filter((ex) => {
+      // 检查角色是否装备了匹配指定垃圾类型的装备
+      for (const equipmentId of ex.equipment) {
+        const equipmentConfig = equipmentConfigMap.get(equipmentId);
+        if (!equipmentConfig) continue;
+
+        const matchedTypesRaw = equipmentConfig.匹配垃圾类型列表 ?? '';
+        const matchedTypes = matchedTypesRaw
+          .split('|')
+          .map((t) => t.trim())
+          .filter(Boolean);
+        if (matchedTypes.includes(garbageType)) {
+          return true;
+        }
+      }
+      return false;
     }).length;
 
     return count >= minCount;
@@ -304,19 +380,69 @@ export function resolveGarbageOutput(
 
   // 收集相关角色ID（触发条件的角色）
   const relatedExplorerIds: string[] = [];
-  if (matchedCondition && matchedCondition.触发条件类型 === 'ExplorerTagCount') {
-    const params = parseParams((matchedCondition as AdvancedOutputConditionConfigEntry).触发条件参数);
-    const tag = String(params.ExplorerTag ?? '');
-    if (tag) {
-      ctx.explorers.forEach((ex) => {
-        const tagsRaw = (ex.config as any).末日前身份标签 as string | undefined;
-        if (tagsRaw) {
-          const tags = tagsRaw.split('|').map((t) => t.trim()).filter(Boolean);
-          if (tags.includes(tag)) {
-            relatedExplorerIds.push(ex.id);
+  if (matchedCondition) {
+    if (matchedCondition.触发条件类型 === 'ExplorerTagCount') {
+      const params = parseParams((matchedCondition as AdvancedOutputConditionConfigEntry).触发条件参数);
+      const tag = String(params.ExplorerTag ?? '');
+      if (tag) {
+        ctx.explorers.forEach((ex) => {
+          const tagsRaw = (ex.config as any).末日前身份标签 as string | undefined;
+          if (tagsRaw) {
+            const tags = tagsRaw.split('|').map((t) => t.trim()).filter(Boolean);
+            if (tags.includes(tag)) {
+              relatedExplorerIds.push(ex.id);
+            }
           }
+        });
+      }
+    } else if (matchedCondition.触发条件类型 === 'EquipmentCount' && ctx.allEquipmentConfigs) {
+      const params = parseParams((matchedCondition as AdvancedOutputConditionConfigEntry).触发条件参数);
+      const equipmentTag = String(params.EquipmentTag ?? '');
+      if (equipmentTag) {
+        const equipmentConfigMap = new Map<string, EquipmentConfigEntry>();
+        for (const eq of ctx.allEquipmentConfigs) {
+          equipmentConfigMap.set(eq.ID, eq);
         }
-      });
+        ctx.explorers.forEach((ex) => {
+          for (const equipmentId of ex.equipment) {
+            const equipmentConfig = equipmentConfigMap.get(equipmentId);
+            if (!equipmentConfig) continue;
+            const tagsRaw = equipmentConfig.装备标签列表 ?? '';
+            const tags = tagsRaw
+              .split('|')
+              .map((t) => t.trim())
+              .filter(Boolean);
+            if (tags.includes(equipmentTag)) {
+              relatedExplorerIds.push(ex.id);
+              break; // 每个角色只添加一次
+            }
+          }
+        });
+      }
+    } else if (matchedCondition.触发条件类型 === 'EquipmentMatchGarbageType' && ctx.allEquipmentConfigs) {
+      const params = parseParams((matchedCondition as AdvancedOutputConditionConfigEntry).触发条件参数);
+      const garbageType = String(params.GarbageType ?? '');
+      if (garbageType) {
+        const equipmentConfigMap = new Map<string, EquipmentConfigEntry>();
+        for (const eq of ctx.allEquipmentConfigs) {
+          equipmentConfigMap.set(eq.ID, eq);
+        }
+        ctx.explorers.forEach((ex) => {
+          for (const equipmentId of ex.equipment) {
+            const equipmentConfig = equipmentConfigMap.get(equipmentId);
+            if (!equipmentConfig) continue;
+            const matchedTypesRaw = equipmentConfig.匹配垃圾类型列表 ?? '';
+            const matchedTypes = matchedTypesRaw
+              .split('|')
+              .map((t) => t.trim())
+              .filter(Boolean);
+            if (matchedTypes.includes(garbageType)) {
+              relatedExplorerIds.push(ex.id);
+              break; // 每个角色只添加一次
+            }
+          }
+        });
+      }
     }
   }
 

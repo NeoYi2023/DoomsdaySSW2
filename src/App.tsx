@@ -5,12 +5,16 @@ import { TeamSelectionPanel } from './components/TeamSelectionPanel';
 import { TimeDisplay } from './components/TimeDisplay';
 import { InventoryPanel } from './components/InventoryPanel';
 import { LootAnimation } from './components/LootAnimation';
+import { QuestPanel } from './components/QuestPanel';
+import { ChapterStoryPanel } from './components/ChapterStoryPanel';
 import { generateExplorationBoardLayer } from './core/ExplorationSystem';
 import { resolveBattleTurn, processGarbageAfterBattle } from './core/BattleSystem';
 import { distributeLootToExplorers } from './core/InventorySystem';
 import { MapSystem, type WorldPosition } from './core/MapSystem';
+import { QuestSystem } from './core/QuestSystem';
+import { ChapterSystem } from './core/ChapterSystem';
 import { getText } from './core/LanguageManager';
-import type { ResourceStack } from './types/gameTypes';
+import type { ResourceStack, Quest, Chapter } from './types/gameTypes';
 import type {
   Explorer,
   Monster,
@@ -24,6 +28,9 @@ import type {
   ExplorationPointConfigEntry,
   AdvancedOutputConditionConfigEntry,
   ResourceConfigEntry,
+  QuestConfigEntry,
+  ChapterConfigEntry,
+  EquipmentConfigEntry,
 } from './types/configTypes';
 import explorersConfig from '../configs/json/ExplorerConfig.json';
 import monstersConfig from '../configs/json/MonsterConfig.json';
@@ -32,6 +39,9 @@ import explorationPoints from '../configs/json/ExplorationPointConfig.json';
 import garbagesConfig from '../configs/json/GarbageConfig.json';
 import advancedOutputConditions from '../configs/json/AdvancedOutputConditionConfig.json';
 import resourcesConfig from '../configs/json/ResourceConfig.json';
+import questsConfig from '../configs/json/QuestConfig.json';
+import chaptersConfig from '../configs/json/ChapterConfig.json';
+import equipmentsConfig from '../configs/json/EquipmentConfig.json';
 
 type GameState = 'map' | 'traveling' | 'exploration';
 
@@ -43,9 +53,15 @@ export function App() {
   const garbagesConfigArr = garbagesConfig as GarbageConfigEntry[];
   const advancedConditionsArr = advancedOutputConditions as AdvancedOutputConditionConfigEntry[];
   const resourcesConfigArr = resourcesConfig as ResourceConfigEntry[];
+  const questsConfigArr = questsConfig as QuestConfigEntry[];
+  const chaptersConfigArr = chaptersConfig as ChapterConfigEntry[];
+  const equipmentsConfigArr = equipmentsConfig as EquipmentConfigEntry[];
 
   const [gameState, setGameState] = useState<GameState>('map');
   const [currentRound, setCurrentRound] = useState(1);
+  const [currentDay, setCurrentDay] = useState(1);
+  const [shelterLevel, setShelterLevel] = useState(1);
+  const [showChapterStory, setShowChapterStory] = useState<Chapter | null>(null);
   const [selectedPoint, setSelectedPoint] = useState<ExplorationPointConfigEntry | null>(null);
   const [boardLayer, setBoardLayer] = useState<ExplorationBoardLayer | null>(null);
   const [currentLayer, setCurrentLayer] = useState(1); // 当前探索层数（从1开始）
@@ -71,6 +87,58 @@ export function App() {
   const inventoryButtonRef = useRef<HTMLButtonElement>(null);
 
   const explorersArray = useMemo(() => Array.from(explorers.values()), [explorers]);
+
+  // 任务系统
+  const questSystemRef = useRef<QuestSystem | null>(null);
+  const [quests, setQuests] = useState<Quest[]>([]);
+
+  // 章节系统
+  const chapterSystemRef = useRef<ChapterSystem | null>(null);
+
+  // 初始化章节系统
+  useEffect(() => {
+    if (chapterSystemRef.current === null) {
+      chapterSystemRef.current = new ChapterSystem(chaptersConfigArr);
+      // 显示第一章剧情
+      const firstChapter = chapterSystemRef.current.getChapterByNumber(1);
+      if (firstChapter) {
+        setShowChapterStory(firstChapter);
+      }
+    }
+  }, []);
+
+  // 初始化任务系统
+  useEffect(() => {
+    if (questSystemRef.current === null) {
+      const initialContext = {
+        currentRound: 1,
+        currentDay: 1,
+        shelterLevel: 1,
+        explorers: explorersArray,
+        completedQuests: new Set<string>(),
+        completedExplorations: new Map<string, number>(),
+        defeatedMonsters: new Map<string, number>(),
+        builtFacilities: new Map<string, number>(),
+      };
+      questSystemRef.current = new QuestSystem(questsConfigArr, initialContext);
+      setQuests(questSystemRef.current.getAcceptedQuests());
+    }
+  }, []);
+
+  // 更新任务系统上下文
+  useEffect(() => {
+    if (questSystemRef.current) {
+      questSystemRef.current.updateContext({
+        currentRound,
+        currentDay,
+        shelterLevel,
+        explorers: explorersArray,
+      });
+      questSystemRef.current.updateAllQuestProgress();
+      questSystemRef.current.checkAndAutoAcceptQuests();
+      setQuests(questSystemRef.current.getAcceptedQuests());
+    }
+  }, [currentRound, currentDay, shelterLevel, explorersArray]);
 
   // 处理垃圾产出视觉反馈
   const handleLootAnimations = useCallback((animations: Array<{
@@ -369,6 +437,8 @@ export function App() {
         inventory: [],
         inventoryCapacity: (cfg as any).背包格子数量 ?? 10,
         initialTalentIds: ((cfg as any).初始天赋ID列表 ?? '').split('|').filter(Boolean),
+        equipmentSlots: (cfg as any).装备槽位数量 ?? 0,
+        equipment: [],
       });
     }
 
@@ -444,7 +514,15 @@ export function App() {
     travelTimerRef.current = setTimeout(() => {
       const nextPos = travelPath[nextIndex];
       setTeamPosition(nextPos);
-      setCurrentRound((r) => r + 1);
+      const nextRound = currentRound + 1;
+      const nextDay = Math.floor(nextRound / 48) + 1;
+      setCurrentRound(nextRound);
+      setCurrentDay(nextDay);
+      // 更新任务系统回合数
+      if (questSystemRef.current) {
+        questSystemRef.current.updateRound(nextRound, nextDay);
+        setQuests(questSystemRef.current.getAcceptedQuests());
+      }
     }, 1000);
 
     return () => {
@@ -482,6 +560,7 @@ export function App() {
       garbagesConfigArr,
       advancedConditionsArr,
       getMaxStack,
+      equipmentsConfigArr,
     );
     
     // 处理视觉反馈
@@ -543,7 +622,15 @@ export function App() {
       setMonsters(newMonsters);
       setBoardLayer(updatedBoard);
       setCurrentLayer(nextLayer);
-      setCurrentRound((r) => r + 1);
+      const nextRound = currentRound + 1;
+      const nextDay = Math.floor(nextRound / 48) + 1;
+      setCurrentRound(nextRound);
+      setCurrentDay(nextDay);
+      // 更新任务系统回合数
+      if (questSystemRef.current) {
+        questSystemRef.current.updateRound(nextRound, nextDay);
+        setQuests(questSystemRef.current.getAcceptedQuests());
+      }
       return;
     }
     
@@ -552,6 +639,11 @@ export function App() {
       // #region agent log
       fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'App.tsx:handleNextRound',message:'max layer reached',data:{currentLayer,maxLayers:selectedPoint.最大层数},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'D'})}).catch(()=>{});
       // #endregion
+      
+      // 更新任务系统：记录探索完成
+      if (questSystemRef.current && selectedPoint) {
+        questSystemRef.current.recordExplorationCompleted(selectedPoint.ID);
+      }
       
       alert(`已完成探索点 ${getText(selectedPoint.名称Key ?? selectedPoint.ID)} 的所有 ${selectedPoint.最大层数} 层探索`);
       handleBackToMap();
@@ -565,7 +657,38 @@ export function App() {
       return;
     }
     
-    // 4. 正常更新状态（继续当前层）
+    // 4. 更新任务系统：记录击败的怪物
+    if (questSystemRef.current) {
+      // 检查哪些怪物被击败（HP <= 0）
+      const defeatedMonsterIds = new Set<string>();
+      for (const [monsterId, monster] of battleResult.monsters.entries()) {
+        if (monster.currentHp <= 0) {
+          defeatedMonsterIds.add(monster.config.ID);
+        }
+      }
+      // 检查从棋盘移除的怪物（可能已经死亡）
+      const removedMonsters = new Set<string>();
+      for (const cell of battleResult.board.cells) {
+        if (cell.monsterId) {
+          const monster = battleResult.monsters.get(cell.monsterId);
+          if (monster) {
+            const configId = monster.config.ID;
+            if (monster.currentHp <= 0) {
+              removedMonsters.add(configId);
+            }
+          }
+        }
+      }
+      // 记录击败的怪物
+      for (const monsterId of defeatedMonsterIds) {
+        questSystemRef.current.recordMonsterDefeated(monsterId);
+      }
+      for (const monsterId of removedMonsters) {
+        questSystemRef.current.recordMonsterDefeated(monsterId);
+      }
+    }
+
+    // 5. 正常更新状态（继续当前层）
     setExplorers(garbageResult.explorers);
     setMonsters(battleResult.monsters);
     setBoardLayer(battleResult.board);
@@ -682,6 +805,61 @@ export function App() {
         explorers={explorersArray}
         onClose={() => setInventoryPanelVisible(false)}
       />
+      <QuestPanel
+        quests={quests}
+        onCompleteQuest={(questId) => {
+          if (questSystemRef.current) {
+            const result = questSystemRef.current.completeQuest(questId);
+            if (result.success) {
+              setQuests(questSystemRef.current.getAcceptedQuests());
+              
+              // 检查是否为章节结束任务
+              if (result.isChapterEndQuest && chapterSystemRef.current) {
+                const nextChapter = chapterSystemRef.current.unlockNextChapter();
+                if (nextChapter) {
+                  // 显示新章节的剧情
+                  setShowChapterStory(nextChapter);
+                  // 重置探险队位置（可选：根据设计决定是否重置）
+                  setTeamPosition(null);
+                  setExplorers(new Map());
+                }
+              }
+            }
+          }
+        }}
+        onClaimReward={(questId) => {
+          if (questSystemRef.current) {
+            const reward = questSystemRef.current.claimReward(questId);
+            if (reward) {
+              // 发放奖励到角色背包
+              const rewardItems: Array<{ itemId: string; quantity: number }> = [
+                ...reward.resources.map((r) => ({ itemId: r.resourceId, quantity: r.quantity })),
+                ...reward.items,
+              ];
+              if (rewardItems.length > 0) {
+                const explorersArray = Array.from(explorers.values());
+                const remaining = distributeLootToExplorers(explorersArray, rewardItems, {
+                  getMaxStack,
+                });
+                setExplorers(new Map(explorersArray.map((e) => [e.id, e])));
+                if (remaining.length > 0) {
+                  console.warn('任务奖励未完全发放:', remaining);
+                }
+              }
+              setQuests(questSystemRef.current.getAcceptedQuests());
+            }
+          }
+        }}
+      />
+      {/* 章节剧情面板 */}
+      {showChapterStory && (
+        <ChapterStoryPanel
+          chapter={showChapterStory}
+          onContinue={() => {
+            setShowChapterStory(null);
+          }}
+        />
+      )}
     </div>
   );
 }

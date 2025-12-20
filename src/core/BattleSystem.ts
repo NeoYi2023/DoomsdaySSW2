@@ -6,6 +6,7 @@ import type {
   GarbageConfigEntry,
   AdvancedOutputConditionConfigEntry,
   ResourceStack,
+  EquipmentConfigEntry,
 } from '../types/gameTypes';
 import { resolveGarbageOutput, type ResolvedGarbageOutput } from './EffectSystem';
 import { distributeLootToExplorers } from './InventorySystem';
@@ -178,6 +179,7 @@ export function processGarbageAfterBattle(
   garbageConfigs: GarbageConfigEntry[],
   advancedConditions: AdvancedOutputConditionConfigEntry[],
   getMaxStack: (itemId: string) => number,
+  equipmentConfigs?: EquipmentConfigEntry[],
 ): GarbageProcessResult {
   const explorers = new Map<string, Explorer>();
   explorersInput.forEach((ex, id) => {
@@ -218,6 +220,7 @@ export function processGarbageAfterBattle(
       garbageConfig,
       board,
       allGarbageConfigs: garbageConfigs,
+      allEquipmentConfigs: equipmentConfigs,
     };
 
     // 解析产出（先尝试进阶机制，否则使用默认产出）
