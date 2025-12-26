@@ -24,6 +24,8 @@ export interface ResourceStack {
   quantity: number;
 }
 
+export type EquipmentSlotType = '工具' | '武器' | '防具' | '饰品' | '特殊' | '备用';
+
 export interface Explorer {
   id: string;
   config: ExplorerConfigEntry;
@@ -32,8 +34,9 @@ export interface Explorer {
   inventory: ItemStack[];
   inventoryCapacity: number;
   initialTalentIds: string[];
-  equipmentSlots: number; // 装备槽位数量
-  equipment: string[]; // 当前装备的装备ID列表（长度 <= equipmentSlots）
+  equipmentSlots: number; // 装备槽位数量（固定为6）
+  equipment: (string | null)[]; // 当前装备的装备ID列表（固定长度6，空槽位用null表示）
+  equipmentSlotTypes: EquipmentSlotType[]; // 6个槽位的类型定义
 }
 
 export interface Monster {

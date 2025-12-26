@@ -123,10 +123,23 @@ export function createDeathDrop(
   explorer: Explorer,
   currentRound: number,
 ): DroppedItemOnCell | undefined {
-  if (!explorer.inventory.length) return undefined;
+  // 收集背包物品
+  const items: ItemStack[] = explorer.inventory.map((it) => ({ ...it }));
+  
+  // 添加装备到掉落列表
+  for (const equipmentId of explorer.equipment) {
+    if (equipmentId) {
+      items.push({
+        itemId: equipmentId,
+        quantity: 1,
+      });
+    }
+  }
+  
+  if (items.length === 0) return undefined;
 
   return {
-    items: explorer.inventory.map((it) => ({ ...it })),
+    items,
     deathRound: currentRound,
     deadExplorerId: explorer.id,
   };

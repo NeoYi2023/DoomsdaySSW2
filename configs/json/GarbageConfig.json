@@ -214,5 +214,82 @@
       "建材",
       "金属"
     ]
+  },
+  {
+    "ID": "garbage_food_1",
+    "名称Key": "garbage.food_1.name",
+    "描述Key": "garbage.food_1.desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "素食"
+    ]
+  },
+  {
+    "ID": "garbage_food_2",
+    "名称Key": "garbage.food_2.name",
+    "描述Key": "garbage.food_2.desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "素食"
+    ]
+  },
+  {
+    "ID": "garbage_food_3",
+    "名称Key": "garbage.food_3.name",
+    "描述Key": "garbage.food_3.desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "乳制品"
+    ]
+  },
+  {
+    "ID": "garbage_food_4",
+    "名称Key": "garbage.food_4.name",
+    "描述Key": "garbage.food_4.desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "素食"
+    ]
+  },
+  {
+    "ID": "garbage_food_5",
+    "名称Key": "garbage.food_5.name",
+    "描述Key": "garbage.food_5.desc",
+    "默认搜索产出": "resource_food_1",
+    "垃圾类型列表": [
+      "食物",
+      "酒类"
+    ]
+  },
+  {
+    "ID": "garbage_food_6",
+    "名称Key": "garbage.food_6.name",
+    "描述Key": "garbage.food_6.desc",
+    "默认搜索产出": "resource_food_0",
+    "垃圾类型列表": [
+      "食物",
+      "调料"
+    ],
+    "进阶产出机制ID列表": [
+      "Adv_Pepper_FoodAura"
+    ]
+  },
+  {
+    "ID": "garbage_food_7",
+    "名称Key": "garbage.food_7.name",
+    "描述Key": "garbage.food_7.desc",
+    "默认搜索产出": "resource_food_2",
+    "垃圾类型列表": [
+      "食物",
+      "鱼类"
+    ],
+    "进阶产出机制ID列表": [
+      "Adv_FreshFish_3Times"
+    ],
+    "进阶产出": "resource_food_-3"
   }
 ]

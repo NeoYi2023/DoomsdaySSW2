@@ -194,8 +194,9 @@ function main() {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  // 配置表映射（物理文件名采用“英文名_中文名”形式，代码仅使用英文前缀）
+  // 配置表映射（物理文件名采用"英文名_中文名"形式，代码仅使用英文前缀）
   const configMap = {
+    'EquipmentConfig_装备配置表.csv': 'EquipmentConfig.json',
     'ExplorerConfig_角色配置表.csv': 'ExplorerConfig.json',
     'TechTreeConfig_科技树配置表.csv': 'TechTreeConfig.json',
     'MonsterConfig_怪物配置表.csv': 'MonsterConfig.json',

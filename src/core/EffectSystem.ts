@@ -166,14 +166,17 @@ const advancedOutputConditionHandlers: Record<string, AdvancedOutputConditionHan
     const count = ctx.explorers.filter((ex) => {
       // 检查角色是否装备了指定标签的装备
       for (const equipmentId of ex.equipment) {
+        if (!equipmentId) continue; // 跳过空槽位
         const equipmentConfig = equipmentConfigMap.get(equipmentId);
         if (!equipmentConfig) continue;
 
         const tagsRaw = equipmentConfig.装备标签列表 ?? '';
-        const tags = tagsRaw
-          .split('|')
-          .map((t) => t.trim())
-          .filter(Boolean);
+        let tags: string[] = [];
+        if (typeof tagsRaw === 'string') {
+          tags = tagsRaw.split('|').map((t) => t.trim()).filter(Boolean);
+        } else if (Array.isArray(tagsRaw)) {
+          tags = tagsRaw.map((t) => String(t).trim()).filter(Boolean);
+        }
         if (tags.includes(equipmentTag)) {
           return true;
         }
@@ -203,14 +206,17 @@ const advancedOutputConditionHandlers: Record<string, AdvancedOutputConditionHan
     const count = ctx.explorers.filter((ex) => {
       // 检查角色是否装备了匹配指定垃圾类型的装备
       for (const equipmentId of ex.equipment) {
+        if (!equipmentId) continue; // 跳过空槽位
         const equipmentConfig = equipmentConfigMap.get(equipmentId);
         if (!equipmentConfig) continue;
 
         const matchedTypesRaw = equipmentConfig.匹配垃圾类型列表 ?? '';
-        const matchedTypes = matchedTypesRaw
-          .split('|')
-          .map((t) => t.trim())
-          .filter(Boolean);
+        let matchedTypes: string[] = [];
+        if (typeof matchedTypesRaw === 'string') {
+          matchedTypes = matchedTypesRaw.split('|').map((t) => t.trim()).filter(Boolean);
+        } else if (Array.isArray(matchedTypesRaw)) {
+          matchedTypes = matchedTypesRaw.map((t) => String(t).trim()).filter(Boolean);
+        }
         if (matchedTypes.includes(garbageType)) {
           return true;
         }
@@ -296,6 +302,196 @@ const advancedOutputConditionHandlers: Record<string, AdvancedOutputConditionHan
       }
     }
 
+    return false;
+  },
+  /**
+   * EnhanceGarbageOutputByNeighbor:
+   * - 参数示例："EquipmentTag=食物搜集;SourceSubType=面粉;TargetMainType=食物;Range=1;ExtraFoodPerSource=9"
+   * - 逻辑：检查是否有角色装备了指定标签的装备，且该角色周围Range格内有匹配条件的垃圾，则返回true
+   */
+  EnhanceGarbageOutputByNeighbor: (condition, ctx) => {
+    const params = parseParams(condition.触发条件参数);
+    const equipmentTag = String(params.EquipmentTag ?? '');
+    const range = Number(params.Range ?? 1) || 1;
+    if (!equipmentTag || !ctx.allEquipmentConfigs) return false;
+
+    // 创建装备ID到配置的映射
+    const equipmentConfigMap = new Map<string, EquipmentConfigEntry>();
+    for (const eq of ctx.allEquipmentConfigs) {
+      equipmentConfigMap.set(eq.ID, eq);
+    }
+
+    // 获取当前垃圾的格子索引
+    let currentGarbageCellIndex: number | null = null;
+    for (const cell of ctx.board.cells) {
+      if (cell.garbageId === ctx.garbageConfig.ID) {
+        currentGarbageCellIndex = cell.index;
+        break;
+      }
+    }
+    if (currentGarbageCellIndex === null) return false;
+
+      // 检查是否有角色装备了指定标签的装备，且该角色在范围内
+      for (const explorer of ctx.explorers) {
+        let hasMatchingEquipment = false;
+        for (const equipmentId of explorer.equipment) {
+          if (!equipmentId) continue; // 跳过空槽位
+          const equipmentConfig = equipmentConfigMap.get(equipmentId);
+          if (!equipmentConfig) continue;
+        const tagsRaw = equipmentConfig.装备标签列表 ?? '';
+        let tags: string[] = [];
+        if (typeof tagsRaw === 'string') {
+          tags = tagsRaw.split('|').map((t) => t.trim()).filter(Boolean);
+        } else if (Array.isArray(tagsRaw)) {
+          tags = tagsRaw.map((t) => String(t).trim()).filter(Boolean);
+        }
+        if (tags.includes(equipmentTag)) {
+          hasMatchingEquipment = true;
+          break;
+        }
+      }
+      if (!hasMatchingEquipment) continue;
+
+      // 检查角色是否在范围内
+      const explorerCellIndex = ctx.board.cells.findIndex(c => c.explorerId === explorer.id);
+      if (explorerCellIndex === -1) continue;
+      
+      const dx = Math.abs((explorerCellIndex % 6) - (currentGarbageCellIndex % 6));
+      const dy = Math.abs(Math.floor(explorerCellIndex / 6) - Math.floor(currentGarbageCellIndex / 6));
+      if (dx <= range && dy <= range && !(dx === 0 && dy === 0)) {
+        // 检查SourceSubType或SourceId条件
+        const sourceSubType = params.SourceSubType as string | undefined;
+        const sourceId = params.SourceId as string | undefined;
+        if (sourceSubType) {
+          const garbageTypes = Array.isArray(ctx.garbageConfig.垃圾类型列表)
+            ? ctx.garbageConfig.垃圾类型列表.map(t => String(t).trim())
+            : String(ctx.garbageConfig.垃圾类型列表 ?? '').split('|').map(t => t.trim());
+          if (garbageTypes.includes(sourceSubType)) {
+            return true;
+          }
+        } else if (sourceId) {
+          if (ctx.garbageConfig.ID === sourceId) {
+            return true;
+          }
+        } else {
+          // 只检查TargetMainType
+          return true;
+        }
+      }
+    }
+    return false;
+  },
+  /**
+   * TrapFoodBonus:
+   * - 参数示例："EquipmentId=equipment_tool_2_trap;MaxPerLayer=1;FoodPerTrap=1"
+   * - 逻辑：检查棋盘上是否有指定装备ID的陷阱，根据陷阱数量给予奖励（简化实现，返回true表示有陷阱）
+   */
+  TrapFoodBonus: (condition, ctx) => {
+    const params = parseParams(condition.触发条件参数);
+    const equipmentId = String(params.EquipmentId ?? '');
+    if (!equipmentId || !ctx.allEquipmentConfigs) return false;
+
+    // 检查是否有角色装备了指定装备
+    for (const explorer of ctx.explorers) {
+      if (explorer.equipment.some((id) => id === equipmentId)) {
+        return true;
+      }
+    }
+    return false;
+  },
+  /**
+   * HumanNeighborBonus:
+   * - 参数示例："EquipmentId=equipment_tool_6_black_back;Range=1;FoodPerHuman=1"
+   * - 逻辑：检查装备了指定装备的角色周围是否有其他人类角色
+   */
+  HumanNeighborBonus: (condition, ctx) => {
+    const params = parseParams(condition.触发条件参数);
+    const equipmentId = String(params.EquipmentId ?? '');
+    const range = Number(params.Range ?? 1) || 1;
+    if (!equipmentId || !ctx.allEquipmentConfigs) return false;
+
+    // 获取当前垃圾的格子索引
+    let currentGarbageCellIndex: number | null = null;
+    for (const cell of ctx.board.cells) {
+      if (cell.garbageId === ctx.garbageConfig.ID) {
+        currentGarbageCellIndex = cell.index;
+        break;
+      }
+    }
+    if (currentGarbageCellIndex === null) return false;
+
+    // 检查是否有角色装备了指定装备，且该角色周围有其他人类
+    for (const explorer of ctx.explorers) {
+      if (!explorer.equipment.some((id) => id === equipmentId)) continue;
+
+      const explorerCellIndex = ctx.board.cells.findIndex(c => c.explorerId === explorer.id);
+      if (explorerCellIndex === -1) continue;
+
+      // 检查周围是否有其他人类角色
+      for (const otherExplorer of ctx.explorers) {
+        if (otherExplorer.id === explorer.id) continue;
+        const otherCellIndex = ctx.board.cells.findIndex(c => c.explorerId === otherExplorer.id);
+        if (otherCellIndex === -1) continue;
+
+        const dx = Math.abs((explorerCellIndex % 6) - (otherCellIndex % 6));
+        const dy = Math.abs(Math.floor(explorerCellIndex / 6) - Math.floor(otherCellIndex / 6));
+        if (dx <= range && dy <= range && !(dx === 0 && dy === 0)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  },
+  /**
+   * GarbageCountOnBoard:
+   * - 参数示例："GarbageId=garbage_food_7;MinCount=3"
+   * - 逻辑：检查整个棋盘上指定垃圾ID的数量是否 >= MinCount
+   */
+  GarbageCountOnBoard: (condition, ctx) => {
+    const params = parseParams(condition.触发条件参数);
+    const garbageId = String(params.GarbageId ?? '');
+    const minCount = Number(params.MinCount ?? 1) || 1;
+    if (!garbageId) return false;
+
+    let count = 0;
+    for (const cell of ctx.board.cells) {
+      if (cell.garbageId === garbageId) {
+        count++;
+      }
+    }
+    return count >= minCount;
+  },
+  /**
+   * GarbageAuraBuff:
+   * - 参数示例："SourceGarbageId=garbage_food_6;TargetType=食物;Range=1;ExtraFood=1"
+   * - 逻辑：检查棋盘上是否有源垃圾，且当前垃圾在源垃圾的范围内
+   */
+  GarbageAuraBuff: (condition, ctx) => {
+    const params = parseParams(condition.触发条件参数);
+    const sourceGarbageId = String(params.SourceGarbageId ?? '');
+    const range = Number(params.Range ?? 1) || 1;
+    if (!sourceGarbageId) return false;
+
+    // 获取当前垃圾的格子索引
+    let currentGarbageCellIndex: number | null = null;
+    for (const cell of ctx.board.cells) {
+      if (cell.garbageId === ctx.garbageConfig.ID) {
+        currentGarbageCellIndex = cell.index;
+        break;
+      }
+    }
+    if (currentGarbageCellIndex === null) return false;
+
+    // 查找源垃圾的位置
+    for (const cell of ctx.board.cells) {
+      if (cell.garbageId === sourceGarbageId) {
+        const dx = Math.abs((cell.index % 6) - (currentGarbageCellIndex % 6));
+        const dy = Math.abs(Math.floor(cell.index / 6) - Math.floor(currentGarbageCellIndex / 6));
+        if (dx <= range && dy <= range && !(dx === 0 && dy === 0)) {
+          return true;
+        }
+      }
+    }
     return false;
   },
 };
@@ -405,13 +601,16 @@ export function resolveGarbageOutput(
         }
         ctx.explorers.forEach((ex) => {
           for (const equipmentId of ex.equipment) {
+            if (!equipmentId) continue; // 跳过空槽位
             const equipmentConfig = equipmentConfigMap.get(equipmentId);
             if (!equipmentConfig) continue;
             const tagsRaw = equipmentConfig.装备标签列表 ?? '';
-            const tags = tagsRaw
-              .split('|')
-              .map((t) => t.trim())
-              .filter(Boolean);
+            let tags: string[] = [];
+            if (typeof tagsRaw === 'string') {
+              tags = tagsRaw.split('|').map((t) => t.trim()).filter(Boolean);
+            } else if (Array.isArray(tagsRaw)) {
+              tags = tagsRaw.map((t) => String(t).trim()).filter(Boolean);
+            }
             if (tags.includes(equipmentTag)) {
               relatedExplorerIds.push(ex.id);
               break; // 每个角色只添加一次
@@ -429,13 +628,16 @@ export function resolveGarbageOutput(
         }
         ctx.explorers.forEach((ex) => {
           for (const equipmentId of ex.equipment) {
+            if (!equipmentId) continue; // 跳过空槽位
             const equipmentConfig = equipmentConfigMap.get(equipmentId);
             if (!equipmentConfig) continue;
             const matchedTypesRaw = equipmentConfig.匹配垃圾类型列表 ?? '';
-            const matchedTypes = matchedTypesRaw
-              .split('|')
-              .map((t) => t.trim())
-              .filter(Boolean);
+            let matchedTypes: string[] = [];
+            if (typeof matchedTypesRaw === 'string') {
+              matchedTypes = matchedTypesRaw.split('|').map((t) => t.trim()).filter(Boolean);
+            } else if (Array.isArray(matchedTypesRaw)) {
+              matchedTypes = matchedTypesRaw.map((t) => String(t).trim()).filter(Boolean);
+            }
             if (matchedTypes.includes(garbageType)) {
               relatedExplorerIds.push(ex.id);
               break; // 每个角色只添加一次

@@ -63,11 +63,12 @@ export interface ItemConfigEntry {
 
 export interface ShelterLevelConfigEntry {
   等级: number;
-  默认解锁设施ID列表?: string;
-  可建造设施ID列表?: string;
+  默认解锁设施ID列表?: string | string[];
+  可建造设施ID列表?: string | string[];
   最大设施数量?: number;
   升级前置条件资源ID?: string;
   升级前置条件资源数量?: number;
+  初始工具ID列表?: string | string[]; // 工具ID列表，支持字符串格式（用|分隔）或数组格式，例如：equipment_tool_1_sieve|equipment_tool_2_trap 或 ["equipment_tool_1_sieve", "equipment_tool_2_trap"]
 }
 
 export interface GarbageConfigEntry {
@@ -142,8 +143,8 @@ export interface EquipmentConfigEntry {
   ID: string; // equipmentId
   名称Key: string;
   描述Key?: string;
-  装备标签列表?: string; // 装备标签列表（以|分隔）
-  匹配垃圾类型列表?: string; // 匹配的垃圾类型列表（以|分隔）
+  装备标签列表?: string | string[]; // 装备标签列表，支持字符串格式（以|分隔）或数组格式
+  匹配垃圾类型列表?: string | string[]; // 匹配的垃圾类型列表，支持字符串格式（以|分隔）或数组格式
   效果类型?: string; // 效果类型（ProvideTag, MatchGarbageType, BoostAdvancedOutput）
   效果参数?: string; // 效果参数（JSON字符串或键值对）
   堆叠最大数量?: number; // 堆叠最大数量（如果装备可以作为道具）

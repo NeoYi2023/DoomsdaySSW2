@@ -18,5 +18,95 @@
     ],
     "触发条件类型": "Advanced_10002",
     "触发条件参数": "MinCount=2"
+  },
+  {
+    "ID": "Adv_Tool_1_Sieve",
+    "名称Key": "advCond.tool.1.sieve.name",
+    "描述Key": "advCond.tool.1.sieve.desc",
+    "适用垃圾类型列表": [
+      "食物"
+    ],
+    "触发条件类型": "EnhanceGarbageOutputByNeighbor",
+    "触发条件参数": "EquipmentTag=食物搜集;SourceSubType=面粉;TargetMainType=食物;Range=1;ExtraFoodPerSource=9"
+  },
+  {
+    "ID": "Adv_Tool_2_Trap",
+    "名称Key": "advCond.tool.2.trap.name",
+    "描述Key": "advCond.tool.2.trap.desc",
+    "适用垃圾类型列表": [
+      "食物"
+    ],
+    "触发条件类型": "TrapFoodBonus",
+    "触发条件参数": "EquipmentId=equipment_tool_2_trap;MaxPerLayer=1;PersistChanceNextLayer=0.5;FoodPerTrap=1;ExtraFoodIfTrapCountGE3=1"
+  },
+  {
+    "ID": "Adv_Tool_3_HoneyPot",
+    "名称Key": "advCond.tool.3.honey_pot.name",
+    "描述Key": "advCond.tool.3.honey_pot.desc",
+    "适用垃圾类型列表": [
+      "食物"
+    ],
+    "触发条件类型": "EnhanceGarbageOutputByNeighbor",
+    "触发条件参数": "EquipmentTag=食物搜集;SourceSubType=糖果;TargetMainType=食物;Range=1;FoodPerSource=6"
+  },
+  {
+    "ID": "Adv_Tool_4_Crowbar",
+    "名称Key": "advCond.tool.4.crowbar.name",
+    "描述Key": "advCond.tool.4.crowbar.desc",
+    "适用垃圾类型列表": [
+      "材料"
+    ],
+    "触发条件类型": "EnhanceGarbageOutputByNeighbor",
+    "触发条件参数": "EquipmentTag=材料搜集;TargetMainType=材料;Range=1;MaterialPerTarget=20"
+  },
+  {
+    "ID": "Adv_Tool_5_Bow",
+    "名称Key": "advCond.tool.5.bow.name",
+    "描述Key": "advCond.tool.5.bow.desc",
+    "适用垃圾类型列表": [
+      "食物"
+    ],
+    "触发条件类型": "EnhanceGarbageOutputByNeighbor",
+    "触发条件参数": "EquipmentTag=食物搜集;SourceSubType=野兽;TargetMainType=食物;Range=1;FoodPerSource=20"
+  },
+  {
+    "ID": "Adv_Tool_6_BlackBack",
+    "名称Key": "advCond.tool.6.black_back.name",
+    "描述Key": "advCond.tool.6.black_back.desc",
+    "适用垃圾类型列表": [
+      "食物"
+    ],
+    "触发条件类型": "HumanNeighborBonus",
+    "触发条件参数": "EquipmentId=equipment_tool_6_black_back;Range=1;FoodPerHuman=1"
+  },
+  {
+    "ID": "Adv_Tool_7_Hoe",
+    "名称Key": "advCond.tool.7.hoe.name",
+    "描述Key": "advCond.tool.7.hoe.desc",
+    "适用垃圾类型列表": [
+      "食物"
+    ],
+    "触发条件类型": "EnhanceGarbageOutputByNeighbor",
+    "触发条件参数": "EquipmentTag=食物搜集;SourceId=garbage_food_1;TargetMainType=食物;Range=0;FoodPerSource=9"
+  },
+  {
+    "ID": "Adv_FreshFish_3Times",
+    "名称Key": "advCond.freshfish.3times.name",
+    "描述Key": "advCond.freshfish.3times.desc",
+    "适用垃圾类型列表": [
+      "鱼类"
+    ],
+    "触发条件类型": "GarbageCountOnBoard",
+    "触发条件参数": "GarbageId=garbage_food_7;MinCount=3"
+  },
+  {
+    "ID": "Adv_Pepper_FoodAura",
+    "名称Key": "advCond.pepper.food.aura.name",
+    "描述Key": "advCond.pepper.food.aura.desc",
+    "适用垃圾类型列表": [
+      "食物"
+    ],
+    "触发条件类型": "GarbageAuraBuff",
+    "触发条件参数": "SourceGarbageId=garbage_food_6;TargetType=食物;Range=1;ExtraFood=1"
   }
 ]

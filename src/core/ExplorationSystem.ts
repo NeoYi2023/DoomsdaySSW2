@@ -31,24 +31,15 @@ export interface ExplorationBoardGenerationResult {
 export function parseSpawnEntries(raw: string | string[]): SpawnEntry[] {
   if (!raw) return [];
   
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:parseSpawnEntries',message:'entry',data:{rawType:typeof raw,isArray:Array.isArray(raw),rawValue:raw},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
   
   // 如果是数组，直接处理；如果是字符串，先按 | 分割
   const entries: string[] = Array.isArray(raw) ? raw : raw.split('|');
   
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:parseSpawnEntries',message:'after split',data:{entriesLength:entries.length,firstEntry:entries[0]},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
   
   return entries.map((entry) => {
     const trimmed = entry.trim();
     if (!trimmed) return null;
     
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:parseSpawnEntries',message:'parsing entry',data:{entry:trimmed},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
     
     const parts = trimmed.split('_');
     if (parts.length < 3) return null; // 至少需要 kind_id_weight 三部分
@@ -62,9 +53,6 @@ export function parseSpawnEntries(raw: string | string[]): SpawnEntry[] {
     const idParts = parts.slice(1, -1); // 从第2部分到倒数第2部分
     const id = idParts.join('_'); // 用下划线连接
     
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:parseSpawnEntries',message:'parsed parts',data:{kind,id,idParts,weightStr,partsLength:parts.length,parts,trimmed},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
     
     if (!kind || !id) return null;
     
@@ -74,9 +62,6 @@ export function parseSpawnEntries(raw: string | string[]): SpawnEntry[] {
       weight: Number(weightStr ?? '1') || 1,
     };
     
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:parseSpawnEntries',message:'result',data:result,timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
     
     return result;
   }).filter((entry): entry is SpawnEntry => entry !== null);
@@ -105,9 +90,6 @@ export function generateExplorationBoardLayer(
 ): ExplorationBoardGenerationResult {
   const { pointConfig, explorers, monsterConfigs, garbageConfigs, layerIndex } = input;
 
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:generateExplorationBoardLayer',message:'entry',data:{layerIndex,explorersCount:explorers.length,pointConfigId:pointConfig.ID},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
 
   const totalCells = 6 * 4;
   const cells: ExplorationBoardCell[] = [];
@@ -134,9 +116,6 @@ export function generateExplorationBoardLayer(
     explorerPositions.push(cellIndex);
   }
   
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:generateExplorationBoardLayer',message:'explorers placed',data:{explorerPositions,layerIndex,availableIndicesBefore:availableIndices.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
 
   // 2. 放置怪物和垃圾
   const spawnEntries = parseSpawnEntries(pointConfig.棋盘出现内容);
@@ -151,17 +130,11 @@ export function generateExplorationBoardLayer(
     garbageMap.set(g.ID, g);
   }
   
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:generateExplorationBoardLayer',message:'garbageMap built',data:{garbageMapSize:garbageMap.size,garbageMapKeys:Array.from(garbageMap.keys()).slice(0,10)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'C'})}).catch(()=>{});
-  // #endregion
 
   // 预先过滤出 Monster / Garbage 的 spawn 条目，方便按类型选择
   const monsterEntries = spawnEntries.filter((s) => s.kind === 'Monster');
   const garbageEntries = spawnEntries.filter((s) => s.kind === 'Garbage');
 
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:generateExplorationBoardLayer',message:'spawn entries summary',data:{totalSpawnEntries:spawnEntries.length,monsterEntriesCount:monsterEntries.length,garbageEntriesCount:garbageEntries.length,availableIndicesCount:availableIndices.length,garbageMapSize:garbageMap.size,monsterMapSize:monsterMap.size,garbageEntryIds:garbageEntries.map(e=>e.id).slice(0,5)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'C'})}).catch(()=>{});
-  // #endregion
 
   // 简单规则：剩余空格子中，尝试轮流按权重选怪物/垃圾放置，直到没有可放或格子用完
   let placedCount = 0;
@@ -184,9 +157,6 @@ export function generateExplorationBoardLayer(
     // 再尝试放垃圾
     const garbageEntry = chooseWeighted(garbageEntries);
     if (garbageEntry) {
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:generateExplorationBoardLayer',message:'checking garbage entry',data:{garbageEntryId:garbageEntry.id,hasInMap:garbageMap.has(garbageEntry.id),garbageMapKeys:Array.from(garbageMap.keys()).slice(0,5)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'C'})}).catch(()=>{});
-      // #endregion
       
       if (garbageMap.has(garbageEntry.id)) {
         cell.garbageId = garbageEntry.id;
@@ -199,9 +169,6 @@ export function generateExplorationBoardLayer(
     // 如果都没有可用条目，则该格子保持为空
   }
   
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ExplorationSystem.ts:generateExplorationBoardLayer',message:'placement complete',data:{placedCount,totalCells,explorersCount:explorers.length,layerIndex,explorerPositions,monsterPositions:monsterPositions.slice(0,10),garbagePositions:garbagePositions.slice(0,10),allMonsterPositions:monsterPositions,allGarbagePositions:garbagePositions},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'C'})}).catch(()=>{});
-  // #endregion
 
   const layer: ExplorationBoardLayer = {
     layerIndex: input.layerIndex,

@@ -7,7 +7,11 @@
     "可建造设施ID列表": [
       "workshop_basic"
     ],
-    "最大设施数量": 5
+    "最大设施数量": 5,
+    "初始工具ID列表": [
+      "equipment_tool_1_sieve",
+      "equipment_tool_2_trap"
+    ]
   },
   {
     "等级": 2,
@@ -19,7 +23,10 @@
     ],
     "最大设施数量": "workshop_advanced",
     "升级前置条件资源ID": "8",
-    "升级前置条件资源数量": "resource_metal"
+    "升级前置条件资源数量": "resource_metal",
+    "初始工具ID列表": [
+      "50"
+    ]
   },
   {
     "等级": 3,
@@ -31,6 +38,9 @@
     ],
     "最大设施数量": "workshop_advanced",
     "升级前置条件资源ID": "12",
-    "升级前置条件资源数量": "resource_metal"
+    "升级前置条件资源数量": "resource_metal",
+    "初始工具ID列表": [
+      "100"
+    ]
   }
 ]

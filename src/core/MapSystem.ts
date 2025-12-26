@@ -26,9 +26,6 @@ export class MapSystem {
   isWalkable(pos: WorldPosition): boolean {
     const cell = this.cells.find((c) => c.x === pos.x && c.y === pos.y);
     if (!cell) {
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:'debug-session',runId:'post-fix-empty-walkable',hypothesisId:'H1',location:'MapSystem.ts:isWalkable',message:'cell not found',data:{x:pos.x,y:pos.y},timestamp:Date.now()})}).catch(()=>{});
-      // #endregion
       return false;
     }
 
@@ -43,9 +40,6 @@ export class MapSystem {
       t === '避难所' ||
       t === '探索点';
 
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:'debug-session',runId:'post-fix-empty-walkable',hypothesisId:'H1',location:'MapSystem.ts:isWalkable',message:'check walkable',data:{x:pos.x,y:pos.y,type:cell.type,allowed},timestamp:Date.now()})}).catch(()=>{});
-    // #endregion
 
     return allowed;
   }
@@ -108,34 +102,6 @@ export class MapSystem {
 
     path.reverse();
 
-    // #region agent log
-    const pathSamples = path.slice(0, 20).map((p) => {
-      const cell = this.cells.find((c) => c.x === p.x && c.y === p.y);
-      return {
-        x: p.x,
-        y: p.y,
-        type: cell?.type ?? 'N/A',
-      };
-    });
-    fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: 'debug-session',
-        runId: 'path-align-check',
-        hypothesisId: 'P1',
-        location: 'MapSystem.ts:findPath',
-        message: 'path summary',
-        data: {
-          start,
-          target,
-          length: path.length,
-          samples: pathSamples,
-        },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion
 
     return { path };
   }

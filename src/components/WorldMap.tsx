@@ -63,32 +63,6 @@ export function WorldMap({ mapCells, mapCellsRuntime, points, onSelectPoint, onS
 
   // 渲染时交换X/Y轴：外层循环用X（作为行），内层循环用Y（作为列）
   const rows: JSX.Element[] = [];
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      sessionId: 'debug-session',
-      runId: 'road-align-check',
-      hypothesisId: 'R1',
-      location: 'WorldMap.tsx:render',
-      message: 'grid summary',
-      data: {
-        minX,
-        maxX,
-        minY,
-        maxY,
-        width,
-        height,
-        roadCount: internalCells.filter((c) => c.type === '道路').length,
-        obstacleCount: internalCells.filter(
-          (c) => c.type === '障碍' || c.type === 'Obstacle' || c.type === '空地',
-        ).length,
-      },
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  // #endregion
 
   for (let x = minX; x <= maxX; x++) {
     const cells: JSX.Element[] = [];
@@ -115,24 +89,6 @@ export function WorldMap({ mapCells, mapCellsRuntime, points, onSelectPoint, onS
       // 描边改为使用 box-shadow 向内描边，不再使用 border，避免格子外轮廓看起来有偏移
       let border = 'none' as string | undefined;
       let boxShadow: string | undefined;
-
-      // #region agent log
-      if (isRoad && x === minX + 1) {
-        fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sessionId: 'debug-session',
-            runId: 'road-align-check',
-            hypothesisId: 'R2',
-            location: 'WorldMap.tsx:cell',
-            message: 'road cell sample',
-            data: { x, y, type: cell.type },
-            timestamp: Date.now(),
-          }),
-        }).catch(() => {});
-      }
-      // #endregion
 
       if (isShelter) {
         // 避难所：绿色实心格子 + 向内描边（1 像素）
@@ -197,29 +153,6 @@ export function WorldMap({ mapCells, mapCellsRuntime, points, onSelectPoint, onS
           }}
           title={cellTitle}
           onClick={() => {
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/785ee644-5db5-4b52-b42f-bb682139b76e', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                sessionId: 'debug-session',
-                runId: 'shelter-click-check',
-                hypothesisId: 'S1',
-                location: 'WorldMap.tsx:onClick',
-                message: 'cell clicked',
-                data: {
-                  x,
-                  y,
-                  type: cell.type,
-                  hasPoint,
-                  clickable,
-                  teamPosition,
-                },
-                timestamp: Date.now(),
-              }),
-            }).catch(() => {});
-            // #endregion
-
             if (clickable) {
               if (isExploration && cell.point) {
                 onSelectPoint(cell.point);

@@ -1,3 +1,12 @@
 ﻿ID,名称Key,描述Key,适用垃圾类型列表,触发条件类型,触发条件参数
 condition_example_engineer,advCond.example.engineer.name,advCond.example.engineer.desc,废金属,ExplorerTagCount,ExplorerTag=Engineer;MinCount=2
 Advanced_10002,Advanced_10002,Advanced_10002_desc,螃蟹,Advanced_10002,MinCount=2
+Adv_Tool_1_Sieve,advCond.tool.1.sieve.name,advCond.tool.1.sieve.desc,食物,EnhanceGarbageOutputByNeighbor,EquipmentTag=食物搜集;SourceSubType=面粉;TargetMainType=食物;Range=1;ExtraFoodPerSource=9
+Adv_Tool_2_Trap,advCond.tool.2.trap.name,advCond.tool.2.trap.desc,食物,TrapFoodBonus,EquipmentId=equipment_tool_2_trap;MaxPerLayer=1;PersistChanceNextLayer=0.5;FoodPerTrap=1;ExtraFoodIfTrapCountGE3=1
+Adv_Tool_3_HoneyPot,advCond.tool.3.honey_pot.name,advCond.tool.3.honey_pot.desc,食物,EnhanceGarbageOutputByNeighbor,EquipmentTag=食物搜集;SourceSubType=糖果;TargetMainType=食物;Range=1;FoodPerSource=6
+Adv_Tool_4_Crowbar,advCond.tool.4.crowbar.name,advCond.tool.4.crowbar.desc,材料,EnhanceGarbageOutputByNeighbor,EquipmentTag=材料搜集;TargetMainType=材料;Range=1;MaterialPerTarget=20
+Adv_Tool_5_Bow,advCond.tool.5.bow.name,advCond.tool.5.bow.desc,食物,EnhanceGarbageOutputByNeighbor,EquipmentTag=食物搜集;SourceSubType=野兽;TargetMainType=食物;Range=1;FoodPerSource=20
+Adv_Tool_6_BlackBack,advCond.tool.6.black_back.name,advCond.tool.6.black_back.desc,食物,HumanNeighborBonus,EquipmentId=equipment_tool_6_black_back;Range=1;FoodPerHuman=1
+Adv_Tool_7_Hoe,advCond.tool.7.hoe.name,advCond.tool.7.hoe.desc,食物,EnhanceGarbageOutputByNeighbor,EquipmentTag=食物搜集;SourceId=garbage_food_1;TargetMainType=食物;Range=0;FoodPerSource=9
+Adv_FreshFish_3Times,advCond.freshfish.3times.name,advCond.freshfish.3times.desc,鱼类,GarbageCountOnBoard,GarbageId=garbage_food_7;MinCount=3
+Adv_Pepper_FoodAura,advCond.pepper.food.aura.name,advCond.pepper.food.aura.desc,食物,GarbageAuraBuff,SourceGarbageId=garbage_food_6;TargetType=食物;Range=1;ExtraFood=1

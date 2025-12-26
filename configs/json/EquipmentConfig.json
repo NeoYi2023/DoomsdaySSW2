@@ -1,1 +1,107 @@
-[]
+[
+  {
+    "ID": "equipment_tool_1_sieve",
+    "名称Key": "equipment.tool.1.sieve.name",
+    "描述Key": "equipment.tool.1.sieve.desc",
+    "装备标签列表": [
+      "工具",
+      "食物搜集"
+    ],
+    "匹配垃圾类型列表": [
+      "食物"
+    ],
+    "效果类型": "EnhanceGarbageOutput",
+    "效果参数": "TargetSubType=面粉;Range=1;ExtraFoodPerTarget=9",
+    "堆叠最大数量": 1
+  },
+  {
+    "ID": "equipment_tool_2_trap",
+    "名称Key": "equipment.tool.2.trap.name",
+    "描述Key": "equipment.tool.2.trap.desc",
+    "装备标签列表": [
+      "工具",
+      "食物搜集"
+    ],
+    "匹配垃圾类型列表": [
+      "食物"
+    ],
+    "效果类型": "TrapFoodBonus",
+    "效果参数": "MaxPerLayer=1;PersistChanceNextLayer=0.5;FoodPerTrap=1;ExtraFoodIfTrapCountGE3=1",
+    "堆叠最大数量": 1
+  },
+  {
+    "ID": "equipment_tool_3_honey_pot",
+    "名称Key": "equipment.tool.3.honey_pot.name",
+    "描述Key": "equipment.tool.3.honey_pot.desc",
+    "装备标签列表": [
+      "工具",
+      "食物搜集"
+    ],
+    "匹配垃圾类型列表": [
+      "食物"
+    ],
+    "效果类型": "EnhanceGarbageOutput",
+    "效果参数": "TargetSubType=糖果;Range=1;FoodPerCandy=6",
+    "堆叠最大数量": 1
+  },
+  {
+    "ID": "equipment_tool_4_crowbar",
+    "名称Key": "equipment.tool.4.crowbar.name",
+    "描述Key": "equipment.tool.4.crowbar.desc",
+    "装备标签列表": [
+      "工具",
+      "材料搜集"
+    ],
+    "匹配垃圾类型列表": [
+      "材料"
+    ],
+    "效果类型": "EnhanceGarbageOutput",
+    "效果参数": "TargetMainType=材料;Range=1;MaterialPerTarget=20",
+    "堆叠最大数量": 1
+  },
+  {
+    "ID": "equipment_tool_5_bow",
+    "名称Key": "equipment.tool.5.bow.name",
+    "描述Key": "equipment.tool.5.bow.desc",
+    "装备标签列表": [
+      "工具",
+      "食物搜集"
+    ],
+    "匹配垃圾类型列表": [
+      "食物"
+    ],
+    "效果类型": "EnhanceGarbageOutput",
+    "效果参数": "TargetSubType=野兽;Range=1;FoodPerTarget=20",
+    "堆叠最大数量": 1
+  },
+  {
+    "ID": "equipment_tool_6_black_back",
+    "名称Key": "equipment.tool.6.black_back.name",
+    "描述Key": "equipment.tool.6.black_back.desc",
+    "装备标签列表": [
+      "工具",
+      "食物搜集"
+    ],
+    "匹配垃圾类型列表": [
+      "食物"
+    ],
+    "效果类型": "HumanNeighborBonus",
+    "效果参数": "Range=1;FoodPerHuman=1",
+    "堆叠最大数量": 1
+  },
+  {
+    "ID": "equipment_tool_7_hoe",
+    "名称Key": "equipment.tool.7.hoe.name",
+    "描述Key": "equipment.tool.7.hoe.desc",
+    "装备标签列表": [
+      "工具",
+      "食物搜集"
+    ],
+    "匹配垃圾类型列表": [
+      "食物"
+    ],
+    "效果类型": "EnhanceGarbageOutput",
+    "效果参数": "TargetId=garbage_food_1;Range=0;FoodPerTarget=9",
+    "堆叠最大数量": 1
+  }
+]

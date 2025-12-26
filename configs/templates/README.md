@@ -109,6 +109,7 @@
 - `最大设施数量`: 该等级下避难所可容纳的最大设施数量（整数，可选）
 - `升级前置条件资源ID`: 升级到该等级所需的资源ID（可选）
 - `升级前置条件资源数量`: 升级到该等级所需的资源数量（整数，可选）
+- `初始工具ID列表`: 达到该等级时自动添加到仓库的工具ID列表，多个用竖线 `|` 分隔（如 `equipment_tool_1_sieve|equipment_tool_2_trap`）。工具ID必须存在于 `EquipmentConfig` 中。每个等级的工具只会在首次达到该等级时添加一次。
 
 ### 9. GarbageConfig_template.csv - 垃圾配置表
 配置所有出现在探索棋盘上的垃圾单位信息。
@@ -160,6 +161,34 @@
 - `是否可叠加`: 标记该天赋是否可以多次获得并叠加效果（true/false）
 - `最大叠加层数`: 当 `是否可叠加` 为 true 时，限制最大叠加层数（整数，可选；为空表示不限）
 
+### 13. EquipmentConfig_template.csv - 装备配置表
+配置所有可被角色装备的工具/装备信息。装备主要用于在探索棋盘中激活进阶产出效果。
+
+**字段说明：**
+- `ID`: 装备唯一标识符（equipmentId），如 `equipment_tool_001`
+- `名称Key`: 文本Key，用于多语言显示装备名称（如 `equipment.tool.001.name`）
+- `描述Key`: 文本Key，用于多语言显示装备描述（如 `equipment.tool.001.desc`）
+- `装备标签列表`: 装备标签列表，用于进阶产出机制的条件匹配，多个标签用竖线 `|` 分隔（如 `工具|食物搜集`）
+- `匹配垃圾类型列表`: 该装备可以匹配的垃圾类型列表，用于判断是否对特定垃圾生效，多个类型用竖线 `|` 分隔（如 `食物|水产|食物|野兽`）
+- `效果类型`: 装备效果类型，用于代码侧区分不同的效果处理逻辑（如 `EnhanceGarbageOutput`、`TrapFoodBonus`、`HumanNeighborBonus` 等）
+- `效果参数`: 效果参数字符串，由代码解析，格式为键值对（如 `TargetSubType=面粉;Range=1;ExtraFoodPerTarget=9`）
+- `堆叠最大数量`: 该装备在背包中1个格子上最多可以堆叠的数量（整数，通常为1，表示不可堆叠）
+
+**配置示例：**
+- 筛漏（tool_1）：装备标签为"工具|食物搜集"，匹配"食物"类型，效果是增强相邻面粉类食材的产出
+- 陷阱（tool_2）：每层可安装1个，50%概率出现在下一层，根据陷阱数量给予食物奖励
+- 蜜罐（tool_3）：收集相邻糖果类食材，每个糖果可获得6个食物
+- 撬棍（tool_4）：收集相邻材料，每个材料可获得20材料
+- 弓箭（tool_5）：收集相邻野兽，每个野兽可获得20食物
+- 黑背（tool_6）：与人类相邻时，每个人类增加1食物产出
+- 锄头（tool_7）：收集相连的土豆，每个土豆可获得9食物
+
+**注意事项：**
+- 装备标签用于在进阶产出机制中通过 `EquipmentTag` 参数进行匹配
+- 匹配垃圾类型列表用于判断装备是否对特定垃圾类型生效
+- 效果参数的具体格式和含义由代码侧的效果处理函数决定
+- 装备可以作为道具存储在背包中，穿戴时从背包移除，卸下时放回背包
+
 ## 使用方法
 
 ### 方法1：使用Excel编辑（推荐）
@@ -204,6 +233,7 @@ node tools/csv-to-json.js configs/templates configs/json
 - `ResourceConfig.json`
 - `ItemConfig.json`
 - `ShelterLevelConfig.json`
+- `EquipmentConfig.json`
 
 ## 填写注意事项
 
@@ -225,6 +255,9 @@ node tools/csv-to-json.js configs/templates configs/json
 4. **ExplorationPointConfig → ResourceConfig**: 探索点的垃圾生成规则引用资源ID
 5. **MonsterConfig → ResourceConfig**: 怪物的掉落资源引用资源ID
 6. **ShelterLevelConfig → ItemConfig/ResourceConfig**: 避难所升级条件可能引用资源ID
+7. **EquipmentConfig → AdvancedOutputConditionConfig**: 装备的效果参数可能引用进阶产出机制ID
+8. **EquipmentConfig → GarbageConfig**: 装备的匹配垃圾类型列表与垃圾的垃圾类型列表进行匹配
+9. **ExplorerConfig → EquipmentConfig**: 角色可以装备装备，装备槽位数量在角色配置中定义
 
 ## 文件位置
 
